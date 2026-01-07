@@ -1,0 +1,768 @@
+登录
+// curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/users/login?username=admin&password=admin' \
+//   -X 'POST' \
+//   -H 'sec-ch-ua-platform: "Windows"' \
+//   -H 'Referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+//   -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36' \
+//   -H 'Accept: application/json, text/plain, */*' \
+//   -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+//   -H 'Token;' \
+//   -H 'sec-ch-ua-mobile: ?0'
+
+
+个人信息
+curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/users/session' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36'
+
+  统计数据
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/barSum?thisTable=%7B%22tableName%22:%22jipiao_order%22,%22sumColum%22:%22jipiao_order_true_price%22%7D&joinTable=%7B%22tableName%22:%22jipiao%22,%22string%22:%22jipiao_name%22%7D' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36'
+
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/barCount?thisTable=%7B%22tableName%22:%22jipiao_order%22,%22date%22:%22insert_time%22%7D&joinTable=%7B%22tableName%22:%22jipiao%22,%22string%22:%22jipiao_name%22%7D' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36'
+
+  用户列表
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/yonghu/page?page=1&limit=10&sort=id&yonghuDelete=1' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36'
+
+  性别
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/dictionary/page?dicCode=sex_types&page=1&limit=100' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36'
+
+  航班列表
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/jipiao/page?page=1&limit=10&sort=id&jipiaoDelete=1' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36'
+
+  航班类型
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/dictionary/page?dicCode=jipiao_types&page=1&limit=100' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36'
+
+  航班状态
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/dictionary/page?dicCode=hangban_types&page=1&limit=100' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36'
+
+  航班收藏
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/jipiaoCollection/page?page=1&limit=10&sort=id&jipiaoCollectionTypes=1&jipiaoCollectionDelete=1' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36'
+
+  机票订单
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/jipiaoOrder/page?page=1&limit=10&sort=id&jipiaoOrderDelete=1' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36'
+
+  新闻类型列表
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/dictionary/page?page=1&limit=10&sort=id&dicCode=news_types&dicName=%E6%96%B0%E9%97%BB%E7%B1%BB%E5%9E%8B' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36'
+
+  新闻列表
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/news/page?page=1&limit=10&sort=id&newsDelete=1' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36'
+
+  新闻详情
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/news/info/14' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36'
+
+  上传
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/file/upload' \
+  -H 'accept: */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundaryAMHtWXEgmKK9agw1' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'origin: https://26f6770c.r31.cpolar.top' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36' \
+  --data-raw $'------WebKitFormBoundaryAMHtWXEgmKK9agw1\r\nContent-Disposition: form-data; name="file"; filename="logo.png"\r\nContent-Type: image/png\r\n\r\n\r\n------WebKitFormBoundaryAMHtWXEgmKK9agw1--\r\n'
+
+  {
+    "code": 0,
+    "file": "1740019995857.png"
+  }
+
+  新增新闻
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/news/save' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'content-type: application/json; charset=UTF-8' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'origin: https://26f6770c.r31.cpolar.top' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36' \
+  --data-raw '{"newsName":"2","newsTypes":3,"newsPhoto":"/upload/1740019995857.png","insertTime":"","newsContent":"<p>55555</p>"}'
+
+  修改新闻
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/news/update' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'content-type: application/json; charset=UTF-8' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'origin: https://26f6770c.r31.cpolar.top' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36' \
+  --data-raw '{"id":15,"newsName":"666","newsTypes":3,"newsPhoto":"/upload/1740019995857.png","insertTime":"2025-02-20 10:54:13","newsContent":"<p>55555</p>","createTime":"2025-02-20 10:54:13","newsValue":"民航新闻"}'
+
+  删除新闻
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/news/delete' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'content-type: application/json; charset=UTF-8' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'origin: https://26f6770c.r31.cpolar.top' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36' \
+  --data-raw '[15]'
+
+  航班类型最大编码
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/dictionary/maxCodeIndex' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'content-type: application/json; charset=UTF-8' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'origin: https://26f6770c.r31.cpolar.top' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36' \
+  --data-raw '{"dicCode":"jipiao_types"}'
+
+  新闻类型最大编码
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/dictionary/maxCodeIndex' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'content-type: application/json; charset=UTF-8' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'origin: https://26f6770c.r31.cpolar.top' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36' \
+  --data-raw '{"dicCode":"news_types"}'
+
+  新增新闻类型
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/dictionary/save' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'content-type: application/json; charset=UTF-8' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'origin: https://26f6770c.r31.cpolar.top' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36' \
+  --data-raw '{"codeIndex":4,"indexName":"9999","superId":"","beizhu":"","dicCode":"news_types","dicName":"新闻类型"}'
+
+  新闻类型详情
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/dictionary/info/134' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36'
+
+  编辑新闻类型
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/dictionary/update' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'content-type: application/json; charset=UTF-8' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'origin: https://26f6770c.r31.cpolar.top' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36' \
+  --data-raw '{"id":134,"dicCode":"news_types","dicName":"新闻类型","codeIndex":4,"indexName":"9995555","superId":null,"beizhu":"","createTime":"2025-02-20 10:58:24"}'
+
+  删除新闻类型
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/dictionary/delete' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'content-type: application/json; charset=UTF-8' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'origin: https://26f6770c.r31.cpolar.top' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36' \
+  --data-raw '[134]'
+
+  新增航班类型
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/dictionary/save' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'content-type: application/json; charset=UTF-8' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'origin: https://26f6770c.r31.cpolar.top' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36' \
+  --data-raw '{"codeIndex":12,"indexName":"565","superId":"","beizhu":"","dicCode":"jipiao_types","dicName":"航班类型"}'
+
+  航班类型详情
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/dictionary/info/135' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36'
+
+  编辑航班类型
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/dictionary/update' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'content-type: application/json; charset=UTF-8' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'origin: https://26f6770c.r31.cpolar.top' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36' \
+  --data-raw '{"id":135,"dicCode":"jipiao_types","dicName":"航班类型","codeIndex":12,"indexName":"56999","superId":null,"beizhu":"","createTime":"2025-02-20 11:01:24"}'
+
+  删除航班类型
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/dictionary/delete' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'content-type: application/json; charset=UTF-8' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'origin: https://26f6770c.r31.cpolar.top' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36' \
+  --data-raw '[135]'
+
+  新增用户
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/yonghu/save' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'content-type: application/json; charset=UTF-8' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'origin: https://26f6770c.r31.cpolar.top' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36' \
+  --data-raw '{"username":"6662222","password":"","yonghuName":"222222200000","yonghuPhoto":"/upload/1740020826786.png","yonghuPhone":"13500606060","yonghuIdNumber":"350686200202120256","sexTypes":2,"newMoney":"2222","yonghuDelete":""}'
+
+  用户详情
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/yonghu/info/4' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36'
+
+  编辑用户
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/yonghu/update' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'content-type: application/json; charset=UTF-8' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'origin: https://26f6770c.r31.cpolar.top' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36' \
+  --data-raw '{"id":4,"username":"65333","password":"123456","yonghuName":"222222200000","yonghuPhoto":"/upload/1740020826786.png","yonghuPhone":"13500606060","yonghuIdNumber":"350686200202120256","sexTypes":2,"newMoney":2222,"yonghuDelete":1,"createTime":"2025-02-20 11:07:38","sexValue":"女"}'
+
+  重置密码
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/yonghu/resetPassword?id=4' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36'
+
+  删除用户
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/yonghu/delete' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'content-type: application/json; charset=UTF-8' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'origin: https://26f6770c.r31.cpolar.top' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36' \
+  --data-raw '[4]'
+
+  新增航班
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/jipiao/save' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'content-type: application/json; charset=UTF-8' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'origin: https://26f6770c.r31.cpolar.top' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36' \
+  --data-raw '{"jipiaoName":"22222","jipiaoPhoto":"/upload/1740021098940.png","jipiaoTypes":11,"jipiaoNewMoney":"500","jipiaoChufadi":"asaa","jipiaoMudidi":"222","jipiaoTime":"2025-02-18 00:00:00","zuoweiNumber":"20","shangxiaTypes":"","hangbanTypes":1,"jipiaoDelete":"","jipiaoContent":"<p>666666</p>"}'
+
+  航班上架下架列表
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/dictionary/page?page=1&limit=100&sort=&order=&dicCode=shangxia_types' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36'
+
+  航班详情
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/jipiao/info/15' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36'
+
+  编辑航班
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/jipiao/update' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'content-type: application/json; charset=UTF-8' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'origin: https://26f6770c.r31.cpolar.top' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36' \
+  --data-raw '{"id":15,"jipiaoName":"22222as","jipiaoPhoto":"/upload/1740021098940.png","jipiaoTypes":11,"jipiaoNewMoney":500,"jipiaoChufadi":"asaa","jipiaoMudidi":"222","jipiaoTime":"2025-02-18 00:00:00","zuoweiNumber":20,"shangxiaTypes":1,"hangbanTypes":1,"jipiaoDelete":1,"jipiaoContent":"<p>666666</p>","createTime":"2025-02-20 11:11:43","jipiaoValue":"商飞C919","shangxiaValue":"上架","hangbanValue":"正常"}'
+  
+  下架航班
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/jipiao/update' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'content-type: application/json; charset=UTF-8' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'origin: https://26f6770c.r31.cpolar.top' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36' \
+  --data-raw '{"id":15,"shangxiaTypes":2}'
+
+  取消航班
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/jipiao/quxiaohangban?id=15' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36'
+
+  删除航班
+  curl 'https://26f6770c.r31.cpolar.top/aircraft-booking-api/jipiao/delete' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: zh-CN,zh;q=0.9' \
+  -H 'content-type: application/json; charset=UTF-8' \
+  -b 'JSESSIONID=1904B84E5AB0D49903656FB6A5A1AC3A' \
+  -H 'origin: https://26f6770c.r31.cpolar.top' \
+  -H 'priority: u=1, i' \
+  -H 'referer: https://26f6770c.r31.cpolar.top/aircraft-booking-api/admin/dist/index.html' \
+  -H 'sec-ch-ua: "Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'token: 013jeuinuwd976d6wgp3i9a66u459xje' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36' \
+  --data-raw '[15]'
+
+  航班订单列表 出票
+  curl 'http://localhost:8080/aircraft-booking-api/jipiaoOrder/deliver?id=5' \
+  -X 'POST' \
+  -H 'Accept: application/json, text/plain, */*' \
+  -H 'Accept-Language: zh-CN,zh;q=0.9' \
+  -H 'Cache-Control: no-cache' \
+  -H 'Connection: keep-alive' \
+  -H 'Content-Length: 0' \
+  -H 'Cookie: JSESSIONID=0C7513F41D79FE8F0DC829FCEE2FD932; TOKEN_KEY=gv82af9rwvkocimsgsv6081l2x0j7ixr; USER_KEY={%22id%22:1%2C%22username%22:%22admin%22%2C%22password%22:%22admin%22%2C%22role%22:%22%E7%AE%A1%E7%90%86%E5%91%98%22%2C%22addtime%22:1680503909000}' \
+  -H 'Origin: http://localhost:8080' \
+  -H 'Pragma: no-cache' \
+  -H 'Referer: http://localhost:8080/aircraft-booking-api/admin/dist/index.html' \
+  -H 'Sec-Fetch-Dest: empty' \
+  -H 'Sec-Fetch-Mode: cors' \
+  -H 'Sec-Fetch-Site: same-origin' \
+  -H 'Token: 4a79yy1ysrpoo4ts5h2c8rki6o5amdv1' \
+  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36' \
+  -H 'sec-ch-ua: "Not A(Brand";v="8", "Chromium";v="132", "Google Chrome";v="132"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"'
+
+  航班订单列表 退票
+  curl 'http://localhost:8080/aircraft-booking-api/jipiaoOrder/refund?id=4&t=1740154583821' \
+    -H 'Accept: application/json, text/javascript, */*; q=0.01' \
+    -H 'Accept-Language: zh-CN,zh;q=0.9' \
+    -H 'Cache-Control: no-cache' \
+    -H 'Connection: keep-alive' \
+    -H 'Content-Type: application/x-www-form-urlencoded' \
+    -H 'Cookie: JSESSIONID=0C7513F41D79FE8F0DC829FCEE2FD932; TOKEN_KEY=9ubxk0si4n55qzk7ig6bz0dlr8850vd2; USER_KEY={%22id%22:1%2C%22username%22:%22admin%22%2C%22password%22:%22admin%22%2C%22role%22:%22%E7%AE%A1%E7%90%86%E5%91%98%22%2C%22addtime%22:1736404709000}' \
+    -H 'Pragma: no-cache' \
+    -H 'Referer: http://localhost:8080/aircraft-booking-api/front/pages/jipiaoOrder/list.html' \
+    -H 'Sec-Fetch-Dest: empty' \
+    -H 'Sec-Fetch-Mode: cors' \
+    -H 'Sec-Fetch-Site: same-origin' \
+    -H 'Token: yt0spzo2qqkkiiaqzoa84i3j67nli7f2' \
+    -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36' \
+    -H 'X-Requested-With: XMLHttpRequest' \
+    -H 'sec-ch-ua: "Not A(Brand";v="8", "Chromium";v="132", "Google Chrome";v="132"' \
+    -H 'sec-ch-ua-mobile: ?0' \
+    -H 'sec-ch-ua-platform: "Windows"'
+
+    航班订单列表 取票
+    curl 'http://localhost:8080/aircraft-booking-api/jipiaoOrder/receiving?id=6&t=1740154649373' \
+    -H 'Accept: application/json, text/javascript, */*; q=0.01' \
+    -H 'Accept-Language: zh-CN,zh;q=0.9' \
+    -H 'Cache-Control: no-cache' \
+    -H 'Connection: keep-alive' \
+    -H 'Content-Type: application/x-www-form-urlencoded' \
+    -H 'Cookie: JSESSIONID=0C7513F41D79FE8F0DC829FCEE2FD932; TOKEN_KEY=9ubxk0si4n55qzk7ig6bz0dlr8850vd2; USER_KEY={%22id%22:1%2C%22username%22:%22admin%22%2C%22password%22:%22admin%22%2C%22role%22:%22%E7%AE%A1%E7%90%86%E5%91%98%22%2C%22addtime%22:1736404709000}' \
+    -H 'Pragma: no-cache' \
+    -H 'Referer: http://localhost:8080/aircraft-booking-api/front/pages/jipiaoOrder/list.html' \
+    -H 'Sec-Fetch-Dest: empty' \
+    -H 'Sec-Fetch-Mode: cors' \
+    -H 'Sec-Fetch-Site: same-origin' \
+    -H 'Token: yt0spzo2qqkkiiaqzoa84i3j67nli7f2' \
+    -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36' \
+    -H 'X-Requested-With: XMLHttpRequest' \
+    -H 'sec-ch-ua: "Not A(Brand";v="8", "Chromium";v="132", "Google Chrome";v="132"' \
+    -H 'sec-ch-ua-mobile: ?0' \
+    -H 'sec-ch-ua-platform: "Windows"'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
