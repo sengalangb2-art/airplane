@@ -12,7 +12,8 @@
         ,a.jipiao_chufadi as jipiaoChufadi
         ,a.jipiao_mudidi as jipiaoMudidi
         ,a.jipiao_time as jipiaoTime
-        ,a.zuowei_number as zuoweiNumber
+        ,a.jipiao_arrival_time as jipiaoArrivalTime
+        ,a.jipiao_first_money as jipiaoFirstMoney  ,a.jipiao_first_num as jipiaoFirstNum      ,a.zuowei_number as zuoweiNumber
         ,a.shangxia_types as shangxiaTypes
         ,a.hangban_types as hangbanTypes
         ,a.jipiao_delete as jipiaoDelete
