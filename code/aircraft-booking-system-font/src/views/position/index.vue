@@ -178,6 +178,39 @@
         <span class="m-l-10">正在加载支付页面...</span>
       </div>
     </el-dialog>
+    <el-dialog
+        v-model="payDialogVisible"
+        title="支付宝支付"
+        width="800px"
+        :before-close="closePayDialog">
+    </el-dialog>
+
+    <el-dialog
+        v-model="paymentChoiceVisible"
+        title="请选择支付方式"
+        width="400px"
+        center>
+
+      <div class="flex flex-column align-center">
+        <el-radio-group v-model="payType" class="flex flex-column" style="align-items: flex-start;">
+          <el-radio label="balance" size="large" border style="margin-bottom: 15px; width: 200px;">
+            余额支付 (直接扣款)
+          </el-radio>
+          <el-radio label="alipay" size="large" border style="margin-left: 0; width: 200px;">
+            支付宝支付
+          </el-radio>
+        </el-radio-group>
+      </div>
+
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="paymentChoiceVisible = false">暂不支付</el-button>
+          <el-button type="primary" @click="confirmPayment">
+            确认支付
+          </el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -193,6 +226,7 @@ import {
   alipayOrder,
   getOrderPayStatus,
   updateOrderPayStatus,
+  simulatePayOrder
 } from '@/api/position';
 import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user';
@@ -215,7 +249,9 @@ const dialogFormVisible = ref(false);
 const positions = ref({});
 const resumeList = ref([]);
 const appliedDatas = ref([]);
-
+const paymentChoiceVisible = ref(false); // 控制选择支付方式弹窗的显示
+const payType = ref('balance'); // 默认选择余额支付 'balance' 或 'alipay'
+const createdOrderId = ref(null); // 存储当前创建的订单ID
 // 支付相关状态
 const payDialogVisible = ref(false);
 const payContent = ref('');
@@ -282,7 +318,34 @@ async function onCollection() {
     });
   }
 }
+// 4. 新增：确认支付方式并执行支付
+async function confirmPayment() {
+  // 关闭选择弹窗
+  paymentChoiceVisible.value = false;
 
+  if (!createdOrderId.value) return;
+
+  if (payType.value === 'balance') {
+    // --- 分支 A：余额支付 ---
+    try {
+      await simulatePayOrder(createdOrderId.value);
+      ElMessage.success('余额支付成功！');
+      // 支付成功后跳转回首页
+      setTimeout(() => {
+        router.replace({ path: '/' });
+      }, 1500);
+    } catch (error) {
+      // 如果余额不足或失败
+      ElMessage.error(error.msg || '余额支付失败，请尝试其他方式');
+      // 失败后可以重新打开选择框，或者让用户去订单中心支付
+    }
+
+  } else if (payType.value === 'alipay') {
+    // --- 分支 B：支付宝支付 ---
+    // 调用原有的 startAlipay 逻辑
+    startAlipay(createdOrderId.value);
+  }
+}
 // 关闭支付弹窗
 function closePayDialog() {
   payDialogVisible.value = false;
@@ -371,27 +434,27 @@ const calculateTotalPrice = () => {
 }
 
 function onAddOrder() {
+  if (selectSeat.value.includes(undefined)) {
+    // 简单的防错检查
+  }
   if (selectSeat.value.length === 0) {
     ElMessage.error('请选择座位');
     return;
   }
 
-  // 使用新的函数计算混合总价
   const totalMoney = calculateTotalPrice();
 
   ElMessageBox.confirm(
       `您选择了 ${selectSeat.value.length} 个座位，总价为 ${totalMoney} 元，是否确定订购该航班吗？`,
-      '提示',
+      '订票确认',
       {
-        confirmButtonText: '确定',
+        confirmButtonText: '确定下单',
         cancelButtonText: '取消',
         type: 'warning',
-        draggable: true,
       }
   ).then(async () => {
     try {
-      // 1. 创建订单
-
+      // 1. 请求后端创建订单
       const res = await postAirOrder({
         jipiaoPhoto: '',
         jipiaoOrderUuidNumber: new Date().getTime(),
@@ -403,14 +466,14 @@ function onAddOrder() {
         t: new Date().getTime(),
       });
 
-      // 2. 获取创建的订单ID
-      ElMessage.success('订单创建成功');
+      // 2. 订单创建成功，保存订单ID
+      if (res && res.id) {
+        createdOrderId.value = res.id;
+        ElMessage.success('订单创建成功，请选择支付方式');
 
-      // 3. 发起支付 (修改这里：直接从 res 中获取 id)
-      if(res && res.id) {
-        startAlipay(res.id);
+        // 3. 打开支付方式选择弹窗
+        paymentChoiceVisible.value = true;
       }
-
     } catch (error) {
       console.error('创建订单失败:', error);
       ElMessage.error('创建订单失败: ' + (error.msg || error.message));

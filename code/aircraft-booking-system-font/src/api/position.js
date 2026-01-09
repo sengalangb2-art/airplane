@@ -54,12 +54,15 @@ export function updateOrderPayStatus(data) {
     method: 'post',
     params: data
   });
-  // 模拟支付接口
-  export function simulatePayOrder(id) {
-    return request({
-      url: `/jipiaoOrder/pay`,
-      method: 'post',
-      data: id // 直接发送订单ID
-    });
   }
+// 模拟支付接口
+export function simulatePayOrder(id) {
+  return request({
+    url: `/jipiaoOrder/pay`,
+    method: 'post',
+    data: id,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
 }
