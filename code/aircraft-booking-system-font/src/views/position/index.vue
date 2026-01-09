@@ -57,6 +57,10 @@
             <span>{{ positions.jipiaoTime }}</span>
           </div>
           <div class="row">
+            <span>到达时间：</span>
+            <span>{{ positions.jipiaoArrivalTime }}</span>
+          </div>
+          <div class="row">
             <span>机型：</span>
             <span>{{ positions.jipiaoValue }}</span>
           </div>
