@@ -51,9 +51,8 @@
 import CustomTable from "@/components/CustomTable/index.vue";
 import CustomSearch from "@/components/CustomSearch/index.vue";
 import EditDialog from "@/components/CustomEditDialog/index.vue";
-import { ref, computed } from "vue"; // 补全 computed 引用
-import { ElMessage } from "element-plus";
-import dayjs from "dayjs"; // 【修改】独立导入 dayjs，防止 element-plus 导出异常
+import { ref, computed } from "vue"; // 补充引入 computed
+import { dayjs, ElMessage } from "element-plus";
 import {
   flightTableConfig,
   flightSearchConfig,
@@ -96,6 +95,7 @@ const uploadUrl =
 
 // 更新查询参数，如果bool为true则调后台接口
 const updateQueryData = (params, bool) => {
+  // queryParams.value = { ...queryParams.value, ...params };
   const { pageNum, pageSize } = params;
   queryParams.value = {
     ...queryParams.value,
@@ -112,6 +112,7 @@ const rules = {
   jipiaoName: [{ required: true, message: "请输入航班名称", trigger: "blur" }],
   jipiaoTypes: [{ required: true, message: "请选择航班类型", trigger: "blur" }],
   jipiaoTime: [{ required: true, message: "请选择出发时间", trigger: "blur" }],
+  jipiaoArrivalTime: [{ required: true, message: "请选择到达时间", trigger: "blur" }], // 建议加上到达时间的校验
   jipiaoChufadi: [{ required: true, message: "请输入出发地", trigger: "blur" }],
   jipiaoMudidi: [{ required: true, message: "请输入目的地", trigger: "blur" }],
   jipiaoNewMoney: [{ required: true, message: "请输入经济舱价格", trigger: "blur" }],
@@ -150,69 +151,53 @@ const onReset = () => {
 // 编辑
 const handleEdit = async (row) => {
   const { data } = await getFlightById(row.id);
-  // 处理图片回显
-  if (data.jipiaoPhoto) {
-    data.jipiaoPhoto = data.jipiaoPhoto
-      .split(",")
-      .map(
-        (item) =>
-          import.meta.env.VITE_APP_BASE_IP +
-          import.meta.env.VITE_APP_BASE_URL +
-          "/" +
-          item
-      );
-  } else {
-    data.jipiaoPhoto = []; // 防止为 null 报错
-  }
+  data.jipiaoPhoto = data.jipiaoPhoto
+    .split(",")
+    .map(
+      (item) =>
+        import.meta.env.VITE_APP_BASE_IP +
+        import.meta.env.VITE_APP_BASE_URL +
+        "/" +
+        item
+    );
   formData.value = data;
   editVisible.value = true;
 };
 
-// 确定 【核心修改部分】
+// 确定
 const submitForm = async (data) => {
   const url =
     import.meta.env.VITE_APP_BASE_IP + import.meta.env.VITE_APP_BASE_URL + "/";
 
-  // 1. 统一处理时间格式化，防止 400 错误
-  // 注意：如果 jipiaoTime 本身就是字符串且格式正确，dayjs(str).format 会保持原样，所以这样写是安全的
-  const formattedTime = dayjs(data.jipiaoTime).format("YYYY-MM-DD HH:mm:ss");
-
-  // 【修复点】：增加到达时间格式化，如果有值则格式化，没值传 null
-  const formattedArrivalTime = data.jipiaoArrivalTime
-    ? dayjs(data.jipiaoArrivalTime).format("YYYY-MM-DD HH:mm:ss")
-    : null;
+  // 核心修改部分：格式化时间
+  // 确保 jipiaoTime 和 jipiaoArrivalTime 都被格式化为字符串
+  const formattedJipiaoTime = data.jipiaoTime ? dayjs(data.jipiaoTime).format("YYYY-MM-DD HH:mm:ss") : "";
+  const formattedJipiaoArrivalTime = data.jipiaoArrivalTime ? dayjs(data.jipiaoArrivalTime).format("YYYY-MM-DD HH:mm:ss") : "";
 
   if (data.id) {
-    // === 修改逻辑 ===
     const params = {
       ...data,
-      jipiaoTime: formattedTime,
-      jipiaoArrivalTime: formattedArrivalTime, // 传入格式化后的到达时间
+      jipiaoTime: formattedJipiaoTime,
+      jipiaoArrivalTime: formattedJipiaoArrivalTime, // 修复：增加到达时间格式化
       jipiaoPhoto:
-        data.jipiaoPhoto && data.jipiaoPhoto.length > 0
-          ? data.jipiaoPhoto
-            .map((item) => {
-              if (item.includes("upload/")) {
-                return item.replace(url, "");
-              } else {
-                return "upload/" + item;
-              }
-            })
-            .join(",")
-          : "",
+        data.jipiaoPhoto
+          .map((item) => {
+            if (item.includes("upload/")) {
+              return item.replace(url, "");
+            } else {
+              return "upload/" + item;
+            }
+          })
+          .join(",") || "",
     };
     await updateFlight(params);
     ElMessage.success("修改成功");
   } else {
-    // === 新增逻辑 ===
     const params = {
       ...data,
-      jipiaoTime: formattedTime,
-      jipiaoArrivalTime: formattedArrivalTime, // 传入格式化后的到达时间
-      jipiaoPhoto:
-        data.jipiaoPhoto && data.jipiaoPhoto.length > 0
-          ? data.jipiaoPhoto.map((item) => "upload/" + item).join(",")
-          : "",
+      jipiaoTime: formattedJipiaoTime,
+      jipiaoArrivalTime: formattedJipiaoArrivalTime, // 修复：增加到达时间格式化
+      jipiaoPhoto: data.jipiaoPhoto.map((item) => "upload/" + item).join(","),
     };
     await saveFlight(params);
     ElMessage.success("新增成功");
@@ -252,14 +237,11 @@ const initData = async () => {
 };
 
 const initSearchData = async () => {
-  // 1. 获取航班类型字典
   const { data: flightType } = await getFlightType({
     dicCode: "jipiao_types",
     page: 1,
     limit: 9999,
   });
-
-  // 映射到搜索配置
   flightSearchConfig.value.forEach((element) => {
     if (element.id === "jipiaoTypes") {
       element.options = flightType.list.map((item) => {
@@ -270,8 +252,6 @@ const initSearchData = async () => {
       });
     }
   });
-
-  // 映射到表单配置
   flightEditFormConfig.value.forEach((element) => {
     if (element.id === "jipiaoTypes") {
       element.options = flightType.list.map((item) => {
@@ -282,14 +262,11 @@ const initSearchData = async () => {
       });
     }
   });
-
-  // 2. 获取航班状态字典
   const { data: flightStatus } = await getFlightType({
     dicCode: "hangban_types",
     page: 1,
     limit: 9999,
   });
-
   flightSearchConfig.value.forEach((element) => {
     if (element.id === "hangbanTypes") {
       element.options = flightStatus.list.map((item) => {
@@ -300,7 +277,6 @@ const initSearchData = async () => {
       });
     }
   });
-
   flightEditFormConfig.value.forEach((element) => {
     if (element.id === "hangbanTypes") {
       element.options = flightStatus.list.map((item) => {
@@ -311,8 +287,6 @@ const initSearchData = async () => {
       });
     }
   });
-
-  // 3. 获取上下架字典
   const { data } = await getFlightType({
     dicCode: "shangxia_types",
     page: 1,

@@ -26,8 +26,12 @@
         </div>
 
         <div class="flex align-center">
-          <span> 航班时间：</span>
+          <span> 出发时间：</span>
           <span>{{ item.jipiaoTime }}</span>
+        </div>
+        <div class="flex align-center">
+          <span> 到达时间：</span>
+          <span>{{ item.jipiaoArrivalTime }}</span>
         </div>
       </div>
       <div class="tag">
