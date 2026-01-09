@@ -388,27 +388,40 @@ public class JipiaoOrderController {
         return R.ok().put("id", jipiaoOrder.getId());
     }
     /**
-     * 模拟支付功能
+     * 模拟支付功能（已完善扣款逻辑）
      */
     @RequestMapping("/pay")
-    public R pay(@RequestBody Integer id){
-        logger.debug("pay方法:,,Controller:{},,id:{}",this.getClass().getName(),id);
-
+    public R pay(@RequestBody Integer id) {
         // 1. 查询订单
         JipiaoOrderEntity jipiaoOrder = jipiaoOrderService.selectById(id);
-        if(jipiaoOrder == null){
-            return R.error(511,"查不到该订单");
+        if (jipiaoOrder == null) {
+            return R.error(511, "查不到该订单");
         }
 
         // 2. 检查是否已经支付
-        if("已支付".equals(jipiaoOrder.getIsPay())){
-            return R.error(511,"该订单已支付，请勿重复支付");
+        if ("已支付".equals(jipiaoOrder.getIsPay())) {
+            return R.error(511, "该订单已支付，请勿重复支付");
         }
 
-        // 3. 修改状态为已支付
-        jipiaoOrder.setIsPay("已支付");
-        // jipiaoOrder.setJipiaoOrderTypes(103); // 如果有状态码设计（如101未支付，103已支付），可以在这里同时修改
+        // 3. 扣除余额逻辑
+        JipiaoEntity jipiaoEntity = jipiaoService.selectById(jipiaoOrder.getJipiaoId());
+        if (jipiaoEntity != null) {
+            YonghuEntity yonghuEntity = yonghuService.selectById(jipiaoOrder.getYonghuId());
+            if (yonghuEntity != null && yonghuEntity.getNewMoney() != null) {
+                // 计算新余额
+                double balance = yonghuEntity.getNewMoney() - jipiaoOrder.getJipiaoOrderTruePrice();
+                if (balance < 0) {
+                    return R.error(511, "余额不足，支付失败");
+                }
+                // 更新余额
+                yonghuEntity.setNewMoney(balance);
+                yonghuService.updateById(yonghuEntity);
+            }
+        }
 
+        // 4. 修改订单状态为已支付
+        jipiaoOrder.setIsPay("已支付");
+        jipiaoOrder.setJieshuanshijian(new Date());
         jipiaoOrderService.updateById(jipiaoOrder);
 
         return R.ok();

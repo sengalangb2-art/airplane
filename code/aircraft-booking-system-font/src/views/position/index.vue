@@ -316,7 +316,6 @@ async function checkPayStatus() {
   }
 }
 
-// 发起支付宝支付
 async function startAlipay(orderId) {
   try {
     payContent.value = '';
@@ -326,6 +325,22 @@ async function startAlipay(orderId) {
     const { data } = await alipayOrder(orderId);
     if (data) {
       payContent.value = data;
+
+      // 等待 DOM 更新（也就是等待 v-html 把表单渲染出来）
+      await nextTick();
+
+      // 找到支付宝返回的表单（支付宝默认表单 name 为 alipaysubmit）
+      const alipayForm = document.forms['alipaysubmit'];
+      if (alipayForm) {
+        // 手动提交表单，这会让浏览器跳转到支付宝页面
+        alipayForm.submit();
+      } else {
+        // 如果找不到 name，尝试在容器里找第一个 form
+        const container = document.querySelector('.pay-iframe-container');
+        const fallbackForm = container?.querySelector('form');
+        if (fallbackForm) fallbackForm.submit();
+      }
+      // ------------------ 修改结束 ------------------
 
       // 启动定时器每5秒检查一次支付状态
       payStatusTimer.value = setInterval(checkPayStatus, 5000);
@@ -376,23 +391,24 @@ function onAddOrder() {
   ).then(async () => {
     try {
       // 1. 创建订单
-      const { data } = await postAirOrder({
+
+      const res = await postAirOrder({
         jipiaoPhoto: '',
         jipiaoOrderUuidNumber: new Date().getTime(),
         jipiaoId: positions.value.id,
         yonghuId: userStore.userInfo.userId,
         buyZuoweiNumber: selectSeat.value.join(','),
         buyZuoweiTime: dayjs().format('YYYY-MM-DD'),
-        jipiaoOrderTruePrice: totalMoney, // 传递正确计算后的总价
+        jipiaoOrderTruePrice: totalMoney,
         t: new Date().getTime(),
       });
 
       // 2. 获取创建的订单ID
       ElMessage.success('订单创建成功');
 
-      // 3. 发起支付 (如果返回了orderID)
-      if(data && data.id) {
-        startAlipay(data.id);
+      // 3. 发起支付 (修改这里：直接从 res 中获取 id)
+      if(res && res.id) {
+        startAlipay(res.id);
       }
 
     } catch (error) {
