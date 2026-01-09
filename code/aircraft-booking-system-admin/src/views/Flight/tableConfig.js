@@ -22,6 +22,10 @@ export const flightTableConfig = [
     label: "出发时间",
   },
   {
+    prop: "jipiaoArrivalTime",
+    label: "到达时间",
+  },
+  {
     prop: "jipiaoNewMoney",
     label: "经济舱价格",
     formatter: (row) => {
@@ -107,6 +111,11 @@ export const flightEditFormConfig = ref([
     type: "date",
     label: "出发时间",
     id: "jipiaoTime",
+  },
+  {
+    type: "date",
+    label: "到达时间",
+    id: "jipiaoArrivalTime",
   },
   {
     type: "upload",

@@ -116,7 +116,14 @@ public class JipiaoEntity<T> implements Serializable {
     @TableField(value = "jipiao_time")
 
     private Date jipiaoTime;
-
+    /**
+     * 到达时间
+     */
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat
+    @ColumnInfo(comment="到达时间",type="timestamp")
+    @TableField(value = "jipiao_arrival_time")
+    private Date jipiaoArrivalTime;
 
     /**
      * 座位
@@ -303,6 +310,12 @@ public class JipiaoEntity<T> implements Serializable {
 
     public void setJipiaoTime(Date jipiaoTime) {
         this.jipiaoTime = jipiaoTime;
+    }
+    public Date getJipiaoArrivalTime() {
+        return jipiaoArrivalTime;
+    }
+    public void setJipiaoArrivalTime(Date jipiaoArrivalTime) {
+        this.jipiaoArrivalTime = jipiaoArrivalTime;
     }
     /**
 	 * 获取：座位

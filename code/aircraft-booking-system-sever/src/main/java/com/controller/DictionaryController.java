@@ -132,6 +132,28 @@ public class DictionaryController {
         logger.info("sql语句:"+queryWrapper.getSqlSegment());
         DictionaryEntity dictionaryEntity = dictionaryService.selectOne(queryWrapper);
         if(dictionaryEntity==null){
+            // 自动生成 code_index (keycode)
+            // 如果前端传来的 codeIndex 是空的，我们帮它自动计算
+            if(dictionary.getCodeIndex() == null){
+                // 构造查询：查当前 dic_code 下的所有数据，按 code_index 降序排列
+                List<String> orderDescs = new ArrayList<>();
+                orderDescs.add("code_index");
+
+                Wrapper<DictionaryEntity> maxWrapper = new EntityWrapper<DictionaryEntity>()
+                        .eq("dic_code", dictionary.getDicCode())
+                        .orderDesc(orderDescs); // 降序
+
+                // 取出第一条，就是最大的那条
+                DictionaryEntity maxEntity = dictionaryService.selectOne(maxWrapper);
+
+                if(maxEntity != null && maxEntity.getCodeIndex() != null){
+                    // 如果有数据，就在最大值基础上 +1
+                    dictionary.setCodeIndex(maxEntity.getCodeIndex() + 1);
+                } else {
+                    // 如果是该类型的第1条数据，就设为 1
+                    dictionary.setCodeIndex(1);
+                }
+            }
             dictionary.setCreateTime(new Date());
             dictionaryService.insert(dictionary);
             //字典表新增数据,把数据再重新查出,放入监听器中
