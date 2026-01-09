@@ -323,64 +323,96 @@ public class JipiaoOrderController {
     @RequestMapping("/add")
     public R add(@RequestBody JipiaoOrderEntity jipiaoOrder, HttpServletRequest request){
         logger.debug("add方法:,,Controller:{},,jipiaoOrder:{}",this.getClass().getName(),jipiaoOrder.toString());
-            JipiaoEntity jipiaoEntity = jipiaoService.selectById(jipiaoOrder.getJipiaoId());
-            if(jipiaoEntity == null){
-                return R.error(511,"查不到该航班信息");
-            }
-            // Double jipiaoNewMoney = jipiaoEntity.getJipiaoNewMoney();
+        JipiaoEntity jipiaoEntity = jipiaoService.selectById(jipiaoOrder.getJipiaoId());
+        if(jipiaoEntity == null){
+            return R.error(511,"查不到该航班信息");
+        }
+        if(jipiaoEntity.getJipiaoNewMoney() == null){
+            return R.error(511,"现价不能为空");
+        }
 
-            if(false){
-            }
-            else if(jipiaoEntity.getJipiaoNewMoney() == null){
-                return R.error(511,"现价不能为空");
-            }
-            List<String> buyZuoweiNumberList = new ArrayList<>(Arrays.asList(jipiaoOrder.getBuyZuoweiNumber().split(",")));//这次购买的座位
-            List<String> beforeBuyZuoweiNumberList = new ArrayList<>();//之前已经购买的座位
+        String[] buyZuoweiNumberList = jipiaoOrder.getBuyZuoweiNumber().split(",");
 
-                    //某天日期的某个分段
-            List<JipiaoOrderEntity> jipiaoOrderEntityList =
-                        jipiaoOrderService.selectList(new EntityWrapper<JipiaoOrderEntity>()
-                        .eq("jipiao_id", jipiaoOrder.getJipiaoId())
-                        .eq("buy_zuowei_time", jipiaoOrder.getBuyZuoweiTime())
-                        .notIn("jipiao_order_types",102)//已退票的订单
+        // 校验座位是否已被占用 (保持原有逻辑)
+        List<String> beforeBuyZuoweiNumberList = new ArrayList<>();
+        List<JipiaoOrderEntity> jipiaoOrderEntityList = jipiaoOrderService.selectList(new EntityWrapper<JipiaoOrderEntity>()
+                .eq("jipiao_id", jipiaoOrder.getJipiaoId())
+                .eq("buy_zuowei_time", jipiaoOrder.getBuyZuoweiTime())
+                .notIn("jipiao_order_types",102)
+        );
+        for(JipiaoOrderEntity d:jipiaoOrderEntityList){
+            beforeBuyZuoweiNumberList.addAll(Arrays.asList(d.getBuyZuoweiNumber().split(",")));
+        }
 
-                        );
-            for(JipiaoOrderEntity d:jipiaoOrderEntityList){
-                beforeBuyZuoweiNumberList.addAll(Arrays.asList(d.getBuyZuoweiNumber().split(",")));
+        // 检查重复
+        for(String seat : buyZuoweiNumberList) {
+            if(beforeBuyZuoweiNumberList.contains(seat)) {
+                return R.error(511, seat + " 号座位已经被使用");
             }
-            buyZuoweiNumberList.retainAll(beforeBuyZuoweiNumberList);//判断当前购买list包含已经被购买的list中是否有重复的  有的话 就保留
-            if(buyZuoweiNumberList != null && buyZuoweiNumberList.size()>0 ){
-                return R.error(511,buyZuoweiNumberList.toString()+" 的座位已经被使用");
+        }
+
+        //计算价格逻辑
+        double totalPrice = 0.0;
+        int firstClassNum = jipiaoEntity.getJipiaoFirstNum() != null ? jipiaoEntity.getJipiaoFirstNum() : 0;
+        double firstClassPrice = jipiaoEntity.getJipiaoFirstMoney() != null ? jipiaoEntity.getJipiaoFirstMoney() : jipiaoEntity.getJipiaoNewMoney();
+        double economyPrice = jipiaoEntity.getJipiaoNewMoney();
+
+        for(String seatStr : buyZuoweiNumberList) {
+            int seatNo = Integer.parseInt(seatStr);
+            if(seatNo <= firstClassNum) {
+                totalPrice += firstClassPrice; // 头等舱价格
+            } else {
+                totalPrice += economyPrice;    // 经济舱价格
             }
+        }
 
-            //计算所获得积分
-            Double buyJifen =0.0;
-            Integer userId = (Integer) request.getSession().getAttribute("userId");
-            YonghuEntity yonghuEntity = yonghuService.selectById(userId);
-            if(yonghuEntity == null)
-                return R.error(511,"用户不能为空");
-            if(yonghuEntity.getNewMoney() == null)
-                return R.error(511,"用户金额不能为空");
-            double balance = yonghuEntity.getNewMoney() - jipiaoEntity.getJipiaoNewMoney()*(jipiaoOrder.getBuyZuoweiNumber().split(",").length);//余额
-            if(balance<0)
-                return R.error(511,"余额不够支付");
-            jipiaoOrder.setJipiaoOrderTypes(101); //设置订单状态为已预约
-            jipiaoOrder.setJipiaoOrderTruePrice(jipiaoEntity.getJipiaoNewMoney()*(jipiaoOrder.getBuyZuoweiNumber().split(",").length)); //设置实付价格
-            jipiaoOrder.setYonghuId(userId); //设置订单支付人id
-            jipiaoOrder.setJipiaoOrderUuidNumber(String.valueOf(new Date().getTime()));
-            jipiaoOrder.setInsertTime(new Date());
-            jipiaoOrder.setCreateTime(new Date());
-            // 设置支付状态为未支付
-            jipiaoOrder.setIsPay("未支付");
-            jipiaoOrderService.insert(jipiaoOrder);//新增订单
-            
-            // 修改：不再立即更新用户余额，支付成功后再更新
-            // yonghuEntity.setNewMoney(balance);//设置金额
-            // yonghuService.updateById(yonghuEntity);
+        // 计算用户余额
+        Integer userId = (Integer) request.getSession().getAttribute("userId");
+        YonghuEntity yonghuEntity = yonghuService.selectById(userId);
+        if(yonghuEntity == null) return R.error(511,"用户不能为空");
+        if(yonghuEntity.getNewMoney() == null) return R.error(511,"用户金额不能为空");
 
-            return R.ok().put("id", jipiaoOrder.getId());
+        double balance = yonghuEntity.getNewMoney() - totalPrice;
+        if(balance < 0) return R.error(511,"余额不够支付");
+
+        jipiaoOrder.setJipiaoOrderTypes(101);
+        jipiaoOrder.setJipiaoOrderTruePrice(totalPrice); // 设置计算后的实付价格
+        jipiaoOrder.setYonghuId(userId);
+        jipiaoOrder.setJipiaoOrderUuidNumber(String.valueOf(new Date().getTime()));
+        jipiaoOrder.setInsertTime(new Date());
+        jipiaoOrder.setCreateTime(new Date());
+        jipiaoOrder.setIsPay("未支付");
+
+        jipiaoOrderService.insert(jipiaoOrder);
+
+        return R.ok().put("id", jipiaoOrder.getId());
     }
+    /**
+     * 模拟支付功能
+     */
+    @RequestMapping("/pay")
+    public R pay(@RequestBody Integer id){
+        logger.debug("pay方法:,,Controller:{},,id:{}",this.getClass().getName(),id);
 
+        // 1. 查询订单
+        JipiaoOrderEntity jipiaoOrder = jipiaoOrderService.selectById(id);
+        if(jipiaoOrder == null){
+            return R.error(511,"查不到该订单");
+        }
+
+        // 2. 检查是否已经支付
+        if("已支付".equals(jipiaoOrder.getIsPay())){
+            return R.error(511,"该订单已支付，请勿重复支付");
+        }
+
+        // 3. 修改状态为已支付
+        jipiaoOrder.setIsPay("已支付");
+        // jipiaoOrder.setJipiaoOrderTypes(103); // 如果有状态码设计（如101未支付，103已支付），可以在这里同时修改
+
+        jipiaoOrderService.updateById(jipiaoOrder);
+
+        return R.ok();
+    }
 
     /**
     * 退票

@@ -24,6 +24,7 @@
           <span> 航班目的地：</span>
           <span>{{ item.jipiaoMudidi }}</span>
         </div>
+
         <div class="flex align-center">
           <span> 航班时间：</span>
           <span>{{ item.jipiaoTime }}</span>
@@ -57,6 +58,7 @@
   function onGoDetail(id) {
     router.push({ path: '/position', query: { id } });
   }
+
 </script>
 
 <style lang="scss" scoped>

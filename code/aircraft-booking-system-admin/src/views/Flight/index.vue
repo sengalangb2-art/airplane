@@ -114,9 +114,13 @@ const rules = {
   jipiaoTime: [{ required: true, message: "请选择出发时间", trigger: "blur" }],
   jipiaoChufadi: [{ required: true, message: "请输入出发地", trigger: "blur" }],
   jipiaoMudidi: [{ required: true, message: "请输入目的地", trigger: "blur" }],
-  jipiaoNewMoney: [{ required: true, message: "请输入价格", trigger: "blur" }],
+  jipiaoNewMoney: [{ required: true, message: "请输入经济舱价格", trigger: "blur" }],
+  // 新增校验
+  jipiaoFirstMoney: [{ required: true, message: "请输入头等舱价格", trigger: "blur" }],
+  jipiaoFirstNum: [{ required: true, message: "请输入头等舱座位数", trigger: "blur" }],
+
   zuoweiNumber: [
-    { required: true, message: "请输入座位数量", trigger: "blur" },
+    { required: true, message: "请输入总座位数量", trigger: "blur" },
   ],
   hangbanTypes: [
     { required: true, message: "请选择航班状态", trigger: "blur" },

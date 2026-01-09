@@ -161,7 +161,19 @@ public class JipiaoEntity<T> implements Serializable {
     @TableField(value = "jipiao_content")
 
     private String jipiaoContent;
+    /**
+     * 头等舱价格
+     */
+    @ColumnInfo(comment="头等舱价格",type="decimal(10,2)")
+    @TableField(value = "jipiao_first_money")
+    private Double jipiaoFirstMoney;
 
+    /**
+     * 头等舱座位数
+     */
+    @ColumnInfo(comment="头等舱座位数",type="int(11)")
+    @TableField(value = "jipiao_first_num")
+    private Integer jipiaoFirstNum;
 
     /**
      * 创建时间
@@ -268,6 +280,20 @@ public class JipiaoEntity<T> implements Serializable {
     /**
 	 * 获取：出发时间
 	 */
+    public Double getJipiaoFirstMoney() {
+        return jipiaoFirstMoney;
+    }
+    public void setJipiaoFirstMoney(Double jipiaoFirstMoney) {
+        this.jipiaoFirstMoney = jipiaoFirstMoney;
+    }
+
+    public Integer getJipiaoFirstNum() {
+        return jipiaoFirstNum;
+    }
+    public void setJipiaoFirstNum(Integer jipiaoFirstNum) {
+        this.jipiaoFirstNum = jipiaoFirstNum;
+    }
+
     public Date getJipiaoTime() {
         return jipiaoTime;
     }

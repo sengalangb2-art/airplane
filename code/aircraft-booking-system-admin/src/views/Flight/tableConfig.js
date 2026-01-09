@@ -23,9 +23,16 @@ export const flightTableConfig = [
   },
   {
     prop: "jipiaoNewMoney",
-    label: "价格",
+    label: "经济舱价格",
     formatter: (row) => {
       return row + "元";
+    },
+  },
+  {
+    prop: "jipiaoFirstMoney",
+    label: "头等舱价格",
+    formatter: (row) => {
+      return (row || 0) + "元";
     },
   },
   {
@@ -116,15 +123,30 @@ export const flightEditFormConfig = ref([
     label: "目的地",
     id: "jipiaoMudidi",
   },
+  // === 新增/修改字段 ===
   {
     type: "input",
-    label: "价格",
+    label: "经济舱价格",
     id: "jipiaoNewMoney",
     inputType: "number",
   },
   {
     type: "input",
-    label: "座位数量",
+    label: "头等舱价格",
+    id: "jipiaoFirstMoney",
+    inputType: "number",
+  },
+  {
+    type: "input",
+    label: "头等舱座位数(前N个)",
+    id: "jipiaoFirstNum",
+    inputType: "number",
+    placeholder: "例如: 10, 代表1-10号为头等舱",
+  },
+  // ===================
+  {
+    type: "input",
+    label: "总座位数量",
     id: "zuoweiNumber",
     inputType: "number",
   },

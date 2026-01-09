@@ -2,12 +2,12 @@
   <div class="login flex justify-center align-center">
     <div class="login-container flex align-center justify-center">
       <el-form
-        ref="formRef"
-        :model="ruleForm"
-        :rules="rules"
-        label-width="auto"
-        class="login-form"
-        status-icon
+          ref="formRef"
+          :model="ruleForm"
+          :rules="rules"
+          label-width="auto"
+          class="login-form"
+          status-icon
       >
         <el-form-item>
           <div class="logo flex justify-center align-center m-b-25">
@@ -16,33 +16,37 @@
           </div>
         </el-form-item>
         <el-form-item>
-          <div class="title">账号密码注册</div>
+          <div class="title">手机号注册</div>
         </el-form-item>
-        <el-form-item prop="username">
+
+        <el-form-item prop="yonghuPhone">
           <el-input
-            v-model="ruleForm.username"
-            :prefix-icon="User"
-            size="large"
+              v-model="ruleForm.yonghuPhone"
+              :prefix-icon="Iphone"
+              size="large"
+              placeholder="请输入手机号"
           />
         </el-form-item>
+
         <el-form-item prop="password">
           <el-input
-            size="large"
-            v-model="ruleForm.password"
-            type="password"
-            :prefix-icon="Lock"
-            show-password
+              size="large"
+              v-model="ruleForm.password"
+              type="password"
+              :prefix-icon="Lock"
+              show-password
+              placeholder="请输入密码"
           />
         </el-form-item>
         <el-form-item>
-          <span class="register" @click="$router.push('/login')">登录账号</span>
+          <span class="register" @click="$router.push('/login')">已有账号？去登录</span>
         </el-form-item>
         <el-form-item>
           <el-button
-            style="width: 100%"
-            type="primary"
-            size="large"
-            @click="submitForm(formRef)"
+              style="width: 100%"
+              type="primary"
+              size="large"
+              @click="submitForm(formRef)"
           >
             注册
           </el-button>
@@ -55,7 +59,7 @@
 <script setup>
 import { register } from "@/api/login";
 import { useUserStore } from "@/stores/user";
-import { Lock, User } from "@element-plus/icons-vue";
+import { Lock, Iphone } from "@element-plus/icons-vue"; // 引入 Iphone 图标
 import router from "@/router";
 import { ElMessage } from "element-plus";
 
@@ -64,18 +68,22 @@ const { SET_TOKEN, SET_USER_INFO } = useUserStore();
 const formRef = ref();
 
 const ruleForm = reactive({
-  username: "",
+  yonghuPhone: "", // 绑定手机号
   password: "",
 });
 
 const rules = reactive({
-  username: [
+  yonghuPhone: [
     {
       required: true,
-      message: "请填写账号",
+      message: "请填写手机号",
       trigger: "blur",
     },
-    // { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' },
+    {
+      pattern: /^1[3-9]\d{9}$/,
+      message: "请输入正确的手机号码",
+      trigger: "blur"
+    },
   ],
   password: [
     {
@@ -83,7 +91,7 @@ const rules = reactive({
       message: "请填写密码",
       trigger: "blur",
     },
-    { min: 6, max: 10, message: "Length should be 6 to 10", trigger: "blur" },
+    { min: 6, max: 10, message: "密码长度应为 6 到 10 位", trigger: "blur" },
   ],
 });
 
@@ -91,9 +99,17 @@ const submitForm = async (formEl) => {
   if (!formEl) return;
   await formEl.validate(async (valid, fields) => {
     if (valid) {
-      await register(ruleForm);
-      ElMessage.success("注册成功，请登录");
-      formRef.value.resetFields();
+      // 构造提交参数
+      const params = {
+        username: ruleForm.yonghuPhone, // 将手机号作为用户名提交，以便后续登录
+        yonghuPhone: ruleForm.yonghuPhone,
+        password: ruleForm.password,
+        yonghuName: "用户" + ruleForm.yonghuPhone.substring(7) // 默认给一个昵称
+      };
+
+      await register(params);
+      ElMessage.success("注册成功，请使用手机号登录");
+      router.push('/login'); // 注册成功跳转登录
     } else {
       console.log("error submit!", fields);
     }
@@ -139,15 +155,19 @@ const submitForm = async (formEl) => {
       .title {
         position: relative;
         margin: 0 auto;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        color: #333;
 
         &:before {
           content: "";
           position: absolute;
-          bottom: 0;
+          bottom: -10px;
           left: 50%;
           transform: translateX(-50%);
-          width: 120%;
-          height: 1px;
+          width: 80px;
+          height: 3px;
           background-color: #1e90ff;
         }
       }
