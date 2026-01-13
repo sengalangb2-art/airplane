@@ -1,20 +1,19 @@
 /*
- Navicat Premium Data Transfer
+ Navicat Premium Dump SQL
 
- Source Server         : local
+ Source Server         : sc
  Source Server Type    : MySQL
- Source Server Version : 80019
+ Source Server Version : 80041 (8.0.41)
  Source Host           : localhost:3306
  Source Schema         : aircraft-booking-system
 
  Target Server Type    : MySQL
- Target Server Version : 80019
+ Target Server Version : 80041 (8.0.41)
  File Encoding         : 65001
 
- Date: 16/06/2025 23:14:48
+ Date: 09/01/2026 15:46:51
 */
-CREATE DATABASE IF NOT EXISTS `aircraft-booking-system` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `aircraft-booking-system`;
+
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -23,16 +22,16 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `dictionary`;
 CREATE TABLE `dictionary`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `dic_code` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '字段',
-  `dic_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '字段名',
-  `code_index` int(0) NULL DEFAULT NULL COMMENT '编码',
-  `index_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '编码名字  Search111 ',
-  `super_id` int(0) NULL DEFAULT NULL COMMENT '父字段id',
-  `beizhu` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `create_time` timestamp(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `dic_code` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '字段',
+  `dic_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '字段名',
+  `code_index` int NULL DEFAULT NULL COMMENT '编码',
+  `index_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '编码名字  Search111 ',
+  `super_id` int NULL DEFAULT NULL COMMENT '父字段id',
+  `beizhu` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
+  `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 139 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 152 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '字典表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of dictionary
@@ -47,9 +46,6 @@ INSERT INTO `dictionary` VALUES (109, 'shangxia_types', '上下架', 1, '上架'
 INSERT INTO `dictionary` VALUES (110, 'shangxia_types', '上下架', 2, '下架', NULL, NULL, '2025-02-17 14:38:29');
 INSERT INTO `dictionary` VALUES (111, 'hangban_types', '航班状态', 1, '正常', NULL, NULL, '2025-02-17 14:38:29');
 INSERT INTO `dictionary` VALUES (112, 'hangban_types', '航班状态', 2, '航班取消', NULL, NULL, '2025-02-17 14:38:29');
-INSERT INTO `dictionary` VALUES (113, 'jipiao_types', '航班类型', 1, '波音B787', NULL, NULL, '2025-02-17 14:38:29');
-INSERT INTO `dictionary` VALUES (114, 'jipiao_types', '航班类型', 2, '波音B777', NULL, NULL, '2025-02-17 14:38:29');
-INSERT INTO `dictionary` VALUES (115, 'jipiao_types', '航班类型', 3, '波音B737', NULL, NULL, '2025-02-17 14:38:29');
 INSERT INTO `dictionary` VALUES (116, 'jipiao_collection_types', '收藏表类型', 1, '收藏', NULL, NULL, '2025-02-17 14:38:29');
 INSERT INTO `dictionary` VALUES (117, 'jipiao_order_types', '订单类型', 101, '已预约', NULL, NULL, '2025-02-17 14:38:29');
 INSERT INTO `dictionary` VALUES (118, 'jipiao_order_types', '订单类型', 102, '已退票', NULL, NULL, '2025-02-17 14:38:29');
@@ -60,71 +56,77 @@ INSERT INTO `dictionary` VALUES (122, 'sex_types', '性别类型', 2, '女', NUL
 INSERT INTO `dictionary` VALUES (123, 'news_types', '新闻类型', 1, '社会新闻', NULL, NULL, '2025-02-17 14:38:29');
 INSERT INTO `dictionary` VALUES (124, 'news_types', '新闻类型', 2, '通知公告', NULL, NULL, '2025-02-17 14:38:29');
 INSERT INTO `dictionary` VALUES (125, 'news_types', '新闻类型', 3, '民航新闻', NULL, NULL, '2025-02-17 14:38:29');
-INSERT INTO `dictionary` VALUES (126, 'jipiao_types', '航班类型', 4, '波音B747', NULL, '', '2025-02-16 23:08:32');
-INSERT INTO `dictionary` VALUES (127, 'jipiao_types', '航班类型', 5, '空客A319', NULL, '', '2025-02-16 23:08:51');
-INSERT INTO `dictionary` VALUES (128, 'jipiao_types', '航班类型', 6, '空客A320', NULL, '', '2025-02-16 23:09:14');
-INSERT INTO `dictionary` VALUES (129, 'jipiao_types', '航班类型', 7, '空客A330', NULL, '', '2025-02-16 23:09:57');
-INSERT INTO `dictionary` VALUES (130, 'jipiao_types', '航班类型', 8, '空客A350', NULL, '', '2025-02-16 23:10:15');
-INSERT INTO `dictionary` VALUES (131, 'jipiao_types', '航班类型', 9, '巴西航空E190', NULL, '', '2025-02-16 23:10:33');
-INSERT INTO `dictionary` VALUES (132, 'jipiao_types', '航班类型', 10, '巴西航空E195', NULL, '', '2025-02-16 23:10:48');
-INSERT INTO `dictionary` VALUES (133, 'jipiao_types', '航班类型', 11, '商飞C919', NULL, '', '2025-02-16 23:11:23');
 INSERT INTO `dictionary` VALUES (139, 'news_types', '新闻类型', NULL, '娱乐新闻', NULL, '娱乐新闻', '2025-04-22 09:55:21');
+INSERT INTO `dictionary` VALUES (141, 'jipiao_types', '航班类型', 1, '波音737-800', NULL, NULL, '2026-01-09 14:58:03');
+INSERT INTO `dictionary` VALUES (142, 'jipiao_types', '航班类型', 2, '波音737-MAX', NULL, NULL, '2026-01-09 14:58:58');
+INSERT INTO `dictionary` VALUES (143, 'jipiao_types', '航班类型', 3, '波音777', NULL, NULL, '2026-01-09 14:59:26');
+INSERT INTO `dictionary` VALUES (144, 'jipiao_types', '航班类型', 4, '空客A321', NULL, NULL, '2026-01-09 15:00:17');
+INSERT INTO `dictionary` VALUES (145, 'jipiao_types', '航班类型', 5, '空客A330-300', NULL, NULL, '2026-01-09 15:00:36');
+INSERT INTO `dictionary` VALUES (146, 'jipiao_types', '航班类型', 6, '空客A321-200', NULL, NULL, '2026-01-09 15:01:24');
+INSERT INTO `dictionary` VALUES (147, 'jipiao_types', '航班类型', 7, '空客A320', NULL, NULL, '2026-01-09 15:02:00');
+INSERT INTO `dictionary` VALUES (148, 'jipiao_types', '航班类型', 8, '波音7M8', NULL, NULL, '2026-01-09 15:02:18');
+INSERT INTO `dictionary` VALUES (149, 'jipiao_types', '航班类型', 9, '商飞919', NULL, NULL, '2026-01-09 15:03:03');
+INSERT INTO `dictionary` VALUES (150, 'jipiao_types', '航班类型', 10, '空客320', NULL, NULL, '2026-01-09 15:03:29');
+INSERT INTO `dictionary` VALUES (151, 'jipiao_types', '航班类型', 11, '空客319', NULL, NULL, '2026-01-09 15:04:20');
 
 -- ----------------------------
 -- Table structure for jipiao
 -- ----------------------------
 DROP TABLE IF EXISTS `jipiao`;
 CREATE TABLE `jipiao`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键 ',
-  `jipiao_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '航班标题 Search111 ',
-  `jipiao_photo` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '航班照片',
-  `jipiao_types` int(0) NULL DEFAULT NULL COMMENT '航班类型 Search111',
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键 ',
+  `jipiao_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '航班标题 Search111 ',
+  `jipiao_photo` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '航班照片',
+  `jipiao_types` int NULL DEFAULT NULL COMMENT '航班类型 Search111',
   `jipiao_new_money` decimal(10, 2) NULL DEFAULT NULL COMMENT '现价',
-  `jipiao_chufadi` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '出发地',
-  `jipiao_mudidi` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '目的地',
-  `jipiao_time` timestamp(0) NULL DEFAULT NULL COMMENT '出发时间',
-  `zuowei_number` int(0) NULL DEFAULT NULL COMMENT '座位',
-  `shangxia_types` int(0) NULL DEFAULT NULL COMMENT '是否上架 ',
-  `hangban_types` int(0) NULL DEFAULT NULL COMMENT '航班状态 Search111',
-  `jipiao_delete` int(0) NULL DEFAULT NULL COMMENT '逻辑删除',
-  `jipiao_content` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '航班详情',
-  `create_time` timestamp(0) NULL DEFAULT NULL COMMENT '创建时间  show1 show2 photoShow',
+  `jipiao_chufadi` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '出发地',
+  `jipiao_mudidi` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '目的地',
+  `jipiao_time` timestamp NULL DEFAULT NULL COMMENT '出发时间',
+  `zuowei_number` int NULL DEFAULT NULL COMMENT '座位',
+  `shangxia_types` int NULL DEFAULT NULL COMMENT '是否上架 ',
+  `hangban_types` int NULL DEFAULT NULL COMMENT '航班状态 Search111',
+  `jipiao_delete` int NULL DEFAULT NULL COMMENT '逻辑删除',
+  `jipiao_content` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL COMMENT '航班详情',
+  `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间  show1 show2 photoShow',
+  `jipiao_first_money` decimal(10, 2) NULL DEFAULT NULL COMMENT '头等舱价格',
+  `jipiao_first_num` int NULL DEFAULT 0 COMMENT '头等舱座位数',
+  `jipiao_arrival_time` timestamp NULL DEFAULT NULL COMMENT '到达时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '航班信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '航班信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of jipiao
 -- ----------------------------
-INSERT INTO `jipiao` VALUES (1, 'JN6354', 'upload/jipiao1.jpg', 11, 321.76, '出发地1', '目的地1', '2025-02-17 14:38:39', 20, 1, 1, 1, '<p>航班详情1</p>', '2025-02-03 14:38:39');
-INSERT INTO `jipiao` VALUES (2, 'OJ2562', 'upload/jipiao2.jpg', 10, 73.91, '出发地2', '目的地2', '2025-02-17 14:38:39', 20, 1, 2, 1, '<p>航班详情2</p>', '2025-02-03 14:38:39');
-INSERT INTO `jipiao` VALUES (3, 'KH2536', 'upload/jipiao3.jpg', 2, 142.30, '出发地3', '目的地3', '2025-03-15 14:38:39', 20, 1, 2, 1, '<p>航班详情3</p>', '2025-02-03 14:38:39');
-INSERT INTO `jipiao` VALUES (4, 'JH7522', 'upload/jipiao4.jpg', 5, 248.59, '出发地4', '目的地4', '2025-04-18 14:38:39', 20, 1, 1, 1, '<p>航班详情4</p>', '2025-02-03 14:38:39');
-INSERT INTO `jipiao` VALUES (5, 'JK3385', 'upload/jipiao5.jpg', 6, 33.81, '出发地5', '目的地5', '2025-04-26 14:38:39', 20, 1, 1, 1, '<p>航班详情5</p>', '2025-02-03 14:38:39');
-INSERT INTO `jipiao` VALUES (6, 'GF2545', 'upload/jipiao6.jpg', 5, 399.54, '出发地6', '目的地6', '2025-05-02 14:38:39', 20, 1, 2, 1, '<p>航班详情6</p>', '2025-02-03 14:38:39');
-INSERT INTO `jipiao` VALUES (7, 'WS5324', 'upload/jipiao7.jpg', 3, 497.62, '出发地7', '目的地7', '2025-04-18 14:38:39', 20, 1, 2, 1, '<p>航班详情7</p>', '2025-02-03 14:38:39');
-INSERT INTO `jipiao` VALUES (8, 'LG9856', 'upload/jipiao8.jpg', 2, 245.57, '出发地8', '目的地8', '2025-06-01 14:38:39', 20, 1, 2, 1, '<p>航班详情8</p>', '2025-02-03 14:38:39');
-INSERT INTO `jipiao` VALUES (9, 'TY8622', 'upload/jipiao9.jpg', 1, 317.00, '出发地9', '目的地9', '2025-02-17 14:38:39', 20, 1, 1, 1, '<p>航班详情9</p>', '2025-02-03 14:38:39');
-INSERT INTO `jipiao` VALUES (10, 'ZK7892', 'upload/jipiao10.jpg', 2, 218.25, '出发地10', '目的地10', '2025-03-15 14:38:39', 20, 1, 1, 1, '<p>航班详情10</p>', '2025-02-03 14:38:39');
-INSERT INTO `jipiao` VALUES (11, 'ZM5632', 'upload/jipiao11.jpg', 2, 407.30, '出发地11', '目的地11', '2025-02-28 14:38:39', 20, 1, 1, 1, '<p>航班详情11</p>', '2025-02-03 14:38:39');
-INSERT INTO `jipiao` VALUES (12, 'RY5503', 'upload/jipiao12.jpg', 2, 382.31, '出发地12', '目的地12', '2025-03-15 14:38:39', 20, 1, 1, 1, '<p>航班详情12</p>', '2025-02-03 14:38:39');
-INSERT INTO `jipiao` VALUES (13, 'RY8867', 'upload/jipiao13.jpg', 3, 184.55, '长乐国际机场', '首都国际机场', '2025-02-21 23:22:15', 40, 1, 1, 1, '<p>航班详情13</p>', '2025-02-03 14:38:39');
-INSERT INTO `jipiao` VALUES (14, 'RY8869', 'upload/jipiao14.jpg', 1, 347.72, '厦门高崎机场', '北京大兴国际机场', '2025-02-18 23:20:51', 60, 1, 1, 1, '<p>航班详情14</p>', '2025-02-03 14:38:39');
-INSERT INTO `jipiao` VALUES (28, 'sdsd', 'upload/1740592557314.JPG', 11, 123.00, 'asas', 'asas', NULL, 34, 1, 1, 2, NULL, '2025-02-27 01:55:57');
-INSERT INTO `jipiao` VALUES (29, '飒飒', 'upload/1742477428867.png', 11, 5555.00, '飒飒', '水水水水', '2025-03-12 00:00:00', 300, 1, 1, 2, NULL, '2025-03-20 21:30:29');
+INSERT INTO `jipiao` VALUES (1, 'JN6354', 'upload/jipiao1.jpg', 11, 321.76, '出发地1', '目的地1', '2025-02-17 14:38:39', 20, 1, 1, 1, '<p>航班详情1</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (2, 'OJ2562', 'upload/jipiao2.jpg', 10, 73.91, '出发地2', '目的地2', '2025-02-17 14:38:39', 20, 1, 2, 1, '<p>航班详情2</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (3, 'KH2536', 'upload/jipiao3.jpg', 2, 142.30, '出发地3', '目的地3', '2025-03-15 14:38:39', 20, 1, 2, 1, '<p>航班详情3</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (4, 'JH7522', 'upload/jipiao4.jpg', 5, 248.59, '出发地4', '目的地4', '2025-04-18 14:38:39', 20, 1, 1, 1, '<p>航班详情4</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (5, 'JK3385', 'upload/jipiao5.jpg', 6, 33.81, '出发地5', '目的地5', '2025-04-26 14:38:39', 20, 1, 1, 1, '<p>航班详情5</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (6, 'GF2545', 'upload/jipiao6.jpg', 5, 399.54, '出发地6', '目的地6', '2025-05-02 14:38:39', 20, 1, 2, 1, '<p>航班详情6</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (7, 'WS5324', 'upload/jipiao7.jpg', 3, 497.62, '出发地7', '目的地7', '2025-04-18 14:38:39', 20, 1, 2, 1, '<p>航班详情7</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (8, 'LG9856', 'upload/jipiao8.jpg', 2, 245.57, '出发地8', '目的地8', '2025-06-01 14:38:39', 20, 1, 2, 1, '<p>航班详情8</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (9, 'TY8622', 'upload/jipiao9.jpg', 1, 317.00, '出发地9', '目的地9', '2025-02-17 14:38:39', 20, 1, 1, 1, '<p>航班详情9</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (10, 'ZK7892', 'upload/jipiao10.jpg', 2, 218.25, '出发地10', '目的地10', '2025-03-15 14:38:39', 20, 1, 1, 1, '<p>航班详情10</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (11, 'ZM5632', 'upload/jipiao11.jpg', 2, 407.30, '出发地11', '目的地11', '2025-02-28 14:38:39', 20, 1, 1, 1, '<p>航班详情11</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (12, 'RY5503', 'upload/jipiao12.jpg', 2, 382.31, '出发地12', '目的地12', '2025-03-15 14:38:39', 20, 1, 1, 1, '<p>航班详情12</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (13, 'RY8867', 'upload/jipiao13.jpg', 3, 184.55, '长乐国际机场', '首都国际机场', '2025-02-21 23:22:15', 40, 1, 1, 1, '<p>航班详情13</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (14, 'RY8869', 'upload/jipiao14.jpg', 1, 300.00, '厦门高崎机场', '北京大兴国际机场', '2025-02-18 23:20:51', 60, 1, 1, 1, '<p>航班详情14</p>', '2025-02-03 14:38:39', 600.00, 12, NULL);
+INSERT INTO `jipiao` VALUES (28, 'sdsd', 'upload/1740592557314.JPG', 11, 123.00, 'asas', 'asas', NULL, 34, 1, 1, 2, NULL, '2025-02-27 01:55:57', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (29, '飒飒', 'upload/1742477428867.png', 11, 5555.00, '飒飒', '水水水水', '2025-03-12 00:00:00', 300, 1, 1, 2, NULL, '2025-03-20 21:30:29', NULL, 0, NULL);
 
 -- ----------------------------
 -- Table structure for jipiao_collection
 -- ----------------------------
 DROP TABLE IF EXISTS `jipiao_collection`;
 CREATE TABLE `jipiao_collection`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `jipiao_id` int(0) NULL DEFAULT NULL COMMENT '航班',
-  `yonghu_id` int(0) NULL DEFAULT NULL COMMENT '用户',
-  `jipiao_collection_types` int(0) NULL DEFAULT NULL COMMENT '类型',
-  `insert_time` timestamp(0) NULL DEFAULT NULL COMMENT '收藏时间',
-  `create_time` timestamp(0) NULL DEFAULT NULL COMMENT '创建时间 show3 photoShow',
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `jipiao_id` int NULL DEFAULT NULL COMMENT '航班',
+  `yonghu_id` int NULL DEFAULT NULL COMMENT '用户',
+  `jipiao_collection_types` int NULL DEFAULT NULL COMMENT '类型',
+  `insert_time` timestamp NULL DEFAULT NULL COMMENT '收藏时间',
+  `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间 show3 photoShow',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '航班收藏' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '航班收藏' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of jipiao_collection
@@ -147,21 +149,21 @@ INSERT INTO `jipiao_collection` VALUES (23, 14, 3, 1, '2025-02-22 01:21:43', '20
 -- ----------------------------
 DROP TABLE IF EXISTS `jipiao_order`;
 CREATE TABLE `jipiao_order`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `jipiao_order_uuid_number` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '订单号 Search111 ',
-  `jipiao_id` int(0) NULL DEFAULT NULL COMMENT '机票',
-  `yonghu_id` int(0) NULL DEFAULT NULL COMMENT '用户',
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `jipiao_order_uuid_number` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '订单号 Search111 ',
+  `jipiao_id` int NULL DEFAULT NULL COMMENT '机票',
+  `yonghu_id` int NULL DEFAULT NULL COMMENT '用户',
   `jipiao_order_true_price` decimal(10, 2) NULL DEFAULT NULL COMMENT '实付价格 ',
-  `jipiao_order_types` int(0) NULL DEFAULT NULL COMMENT '订单类型  Search111 ',
-  `buy_zuowei_number` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预定座位',
+  `jipiao_order_types` int NULL DEFAULT NULL COMMENT '订单类型  Search111 ',
+  `buy_zuowei_number` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '预定座位',
   `buy_zuowei_time` date NULL DEFAULT NULL COMMENT '订购日期',
-  `insert_time` timestamp(0) NULL DEFAULT NULL COMMENT '订单创建时间',
-  `create_time` timestamp(0) NULL DEFAULT NULL COMMENT '创建时间 show3',
-  `is_pay` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '未支付' COMMENT '支付状态',
-  `order_pay_order` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '支付宝订单号',
+  `insert_time` timestamp NULL DEFAULT NULL COMMENT '订单创建时间',
+  `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间 show3',
+  `is_pay` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '未支付' COMMENT '支付状态',
+  `order_pay_order` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '支付宝订单号',
   `jieshuanshijian` timestamp(6) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '机票预订' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '机票预订' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of jipiao_order
@@ -177,21 +179,34 @@ INSERT INTO `jipiao_order` VALUES (8, '1742477257569', 12, 3, 1146.93, 104, '3,4
 INSERT INTO `jipiao_order` VALUES (9, '1750084041227', 12, 3, 382.31, 101, '3', '2025-06-16', '2025-06-16 22:27:21', '2025-06-16 22:27:21', '未支付', NULL, NULL);
 INSERT INTO `jipiao_order` VALUES (10, '1750084076587', 11, 3, 407.30, 101, '8', '2025-06-16', '2025-06-16 22:27:57', '2025-06-16 22:27:57', '未支付', NULL, NULL);
 INSERT INTO `jipiao_order` VALUES (11, '1750084143177', 14, 3, 347.72, 101, '6', '2025-06-16', '2025-06-16 22:29:03', '2025-06-16 22:29:03', '未支付', NULL, NULL);
+INSERT INTO `jipiao_order` VALUES (12, '1767934912787', 14, 3, 600.00, 104, '10', '2026-01-09', '2026-01-09 13:01:53', '2026-01-09 13:01:53', '未支付', NULL, NULL);
+INSERT INTO `jipiao_order` VALUES (13, '1767937450907', 14, 1, 600.00, 101, '12', '2026-01-09', '2026-01-09 13:44:11', '2026-01-09 13:44:11', '待支付', 'JIPIAO_13_1767937450948', NULL);
+INSERT INTO `jipiao_order` VALUES (14, '1767937499525', 13, 3, 184.55, 101, '1', '2026-01-09', '2026-01-09 13:45:00', '2026-01-09 13:45:00', '待支付', 'JIPIAO_14_1767937499560', NULL);
+INSERT INTO `jipiao_order` VALUES (15, '1767937770470', 12, 3, 382.31, 101, '1', '2026-01-09', '2026-01-09 13:49:30', '2026-01-09 13:49:30', '待支付', 'JIPIAO_15_1767937770529', NULL);
+INSERT INTO `jipiao_order` VALUES (16, '1767938364401', 12, 3, 382.31, 101, '6', '2026-01-09', '2026-01-09 13:59:24', '2026-01-09 13:59:24', '待支付', 'JIPIAO_16_1767938364454', NULL);
+INSERT INTO `jipiao_order` VALUES (17, '1767938388352', 12, 3, 382.31, 101, '7', '2026-01-09', '2026-01-09 13:59:48', '2026-01-09 13:59:48', '待支付', 'JIPIAO_17_1767938388399', NULL);
+INSERT INTO `jipiao_order` VALUES (18, '1767940349255', 14, 3, 600.00, 102, '2', '2026-01-09', '2026-01-09 14:32:29', '2026-01-09 14:32:29', '待支付', 'JIPIAO_18_1767940349315', NULL);
+INSERT INTO `jipiao_order` VALUES (19, '1767941486545', 14, 3, 600.00, 102, '8', '2026-01-09', '2026-01-09 14:51:27', '2026-01-09 14:51:27', '待支付', 'JIPIAO_19_1767941489117', NULL);
+INSERT INTO `jipiao_order` VALUES (20, '1767941566147', 14, 3, 300.00, 101, '35', '2026-01-09', '2026-01-09 14:52:46', '2026-01-09 14:52:46', '未支付', NULL, NULL);
+INSERT INTO `jipiao_order` VALUES (21, '1767941580492', 14, 3, 300.00, 101, '55', '2026-01-09', '2026-01-09 14:53:00', '2026-01-09 14:53:00', '未支付', NULL, NULL);
+INSERT INTO `jipiao_order` VALUES (22, '1767941588534', 14, 3, 300.00, 101, '53', '2026-01-09', '2026-01-09 14:53:09', '2026-01-09 14:53:09', '待支付', 'JIPIAO_22_1767941595515', NULL);
+INSERT INTO `jipiao_order` VALUES (23, '1767941607982', 14, 3, 300.00, 101, '51', '2026-01-09', '2026-01-09 14:53:28', '2026-01-09 14:53:28', '已支付', NULL, '2026-01-09 14:53:30.172000');
+INSERT INTO `jipiao_order` VALUES (24, '1767941621325', 12, 3, 382.31, 101, '13', '2026-01-09', '2026-01-09 14:53:41', '2026-01-09 14:53:41', '已支付', NULL, '2026-01-09 14:53:42.757000');
 
 -- ----------------------------
 -- Table structure for news
 -- ----------------------------
 DROP TABLE IF EXISTS `news`;
 CREATE TABLE `news`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `news_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '新闻标题  Search111 ',
-  `news_types` int(0) NULL DEFAULT NULL COMMENT '新闻类型  Search111 ',
-  `news_photo` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '新闻图片',
-  `insert_time` timestamp(0) NULL DEFAULT NULL COMMENT '添加时间',
-  `news_content` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '新闻详情',
-  `create_time` timestamp(0) NULL DEFAULT NULL COMMENT '创建时间 show1 show2 nameShow',
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `news_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '新闻标题  Search111 ',
+  `news_types` int NULL DEFAULT NULL COMMENT '新闻类型  Search111 ',
+  `news_photo` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '新闻图片',
+  `insert_time` timestamp NULL DEFAULT NULL COMMENT '添加时间',
+  `news_content` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL COMMENT '新闻详情',
+  `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间 show1 show2 nameShow',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '民航新闻' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '民航新闻' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of news
@@ -216,37 +231,38 @@ INSERT INTO `news` VALUES (14, '南航集团顺利实现2024航空安全年', 3,
 -- ----------------------------
 DROP TABLE IF EXISTS `token`;
 CREATE TABLE `token`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `userid` bigint(0) NOT NULL COMMENT '采购员id',
-  `username` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '采购员名',
-  `tablename` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '表名',
-  `role` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色',
-  `token` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
-  `addtime` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '新增时间',
-  `expiratedtime` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '过期时间',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `userid` bigint NOT NULL COMMENT '采购员id',
+  `username` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '采购员名',
+  `tablename` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '表名',
+  `role` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '角色',
+  `token` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '密码',
+  `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '新增时间',
+  `expiratedtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '过期时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'token表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = 'token表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of token
 -- ----------------------------
 INSERT INTO `token` VALUES (1, 1, 'cyan', 'yonghu', '用户', 'lrcph0junfk90hepnmzegopq31ocy7cj', '2025-02-06 14:42:29', '2025-02-16 23:01:27');
-INSERT INTO `token` VALUES (2, 1, 'admin', 'users', '管理员', 'fizsxnf3q1hebs0b6lgdlsxlo3zw5610', '2025-02-06 15:12:06', '2025-05-05 10:56:53');
-INSERT INTO `token` VALUES (3, 3, 'cyang', 'yonghu', '用户', '7hte98yd9div4hsozaaq5eam5onmwjmg', '2025-02-06 23:26:30', '2025-06-16 23:25:04');
+INSERT INTO `token` VALUES (2, 1, 'admin', 'users', '管理员', 'c8e5xclrxhhz0yslf0ikdpfnzjsilm2r', '2025-02-06 15:12:06', '2026-01-09 16:42:32');
+INSERT INTO `token` VALUES (3, 3, 'cyang', 'yonghu', '用户', 'lxjunot7u3m0oxyzfu3398tbqs2a83bz', '2025-02-06 23:26:30', '2026-01-09 15:26:24');
 INSERT INTO `token` VALUES (4, 9, '20250303', 'yonghu', '用户', 'quhmzbxmu9k2g6ue5zr7j95ob2ekgzti', '2025-03-20 14:41:27', '2025-03-20 15:41:27');
+INSERT INTO `token` VALUES (5, 10, '18407590373', 'yonghu', '用户', 'dm5vbvf0ly3ouzodhrcmiyx00upidmfo', '2026-01-08 21:11:53', '2026-01-08 22:11:53');
 
 -- ----------------------------
 -- Table structure for users
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `username` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '采购员名',
-  `password` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
-  `role` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '管理员' COMMENT '角色',
-  `addtime` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '新增时间',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `username` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '采购员名',
+  `password` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '密码',
+  `role` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '管理员' COMMENT '角色',
+  `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '新增时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '管理员' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '管理员' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of users
@@ -258,26 +274,27 @@ INSERT INTO `users` VALUES (1, 'admin', 'admin', '管理员', '2025-01-09 14:38:
 -- ----------------------------
 DROP TABLE IF EXISTS `yonghu`;
 CREATE TABLE `yonghu`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `username` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '账户',
-  `password` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '密码',
-  `yonghu_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户姓名 Search111 ',
-  `yonghu_photo` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像',
-  `yonghu_phone` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户手机号',
-  `yonghu_id_number` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户身份证号 ',
-  `sex_types` int(0) NULL DEFAULT NULL COMMENT '性别 Search111 ',
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `username` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '账户',
+  `password` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '密码',
+  `yonghu_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '用户姓名 Search111 ',
+  `yonghu_photo` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '头像',
+  `yonghu_phone` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '用户手机号',
+  `yonghu_id_number` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '用户身份证号 ',
+  `sex_types` int NULL DEFAULT NULL COMMENT '性别 Search111 ',
   `new_money` decimal(10, 2) NULL DEFAULT NULL COMMENT '余额 ',
-  `yonghu_delete` int(0) NULL DEFAULT 1 COMMENT '假删',
-  `create_time` timestamp(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `yonghu_delete` int NULL DEFAULT 1 COMMENT '假删',
+  `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '用户' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of yonghu
 -- ----------------------------
 INSERT INTO `yonghu` VALUES (1, 'cindy', '123456', 'cindy', 'upload/1740592774940.png', '15600959523', '410224199010102001', 1, 9649.62, 1, '2025-01-16 14:38:39');
 INSERT INTO `yonghu` VALUES (2, '13500505050', '123456', '小黄', 'upload/1740592763987.jpg', '13500505050', '410224199010102002', 1, 962.45, 1, '2025-01-02 14:38:39');
-INSERT INTO `yonghu` VALUES (3, 'cyang', '123456', '小杨', 'upload/1742477385307.jpg', '13200202020', '410224199010102003', 2, 90080.00, 1, '2025-01-04 14:38:39');
+INSERT INTO `yonghu` VALUES (3, 'cyang', '123456', '小杨', 'upload/1742477385307.jpg', '13200202020', '410224199010102003', 2, 90680.00, 1, '2025-01-04 14:38:39');
 INSERT INTO `yonghu` VALUES (9, '20250303', '123456', '小花', NULL, '13500525656', '350325200304051265', 1, 90000.00, 1, '2025-03-20 14:41:20');
+INSERT INTO `yonghu` VALUES (10, '18407590373', 'qwe123456', '用户0373', NULL, '18407590373', NULL, NULL, 0.00, 1, '2026-01-08 21:11:41');
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -221,19 +221,7 @@ public class YonghuController {
                         for(List<String> data:dataList){
                             //循环
                             YonghuEntity yonghuEntity = new YonghuEntity();
-//                            yonghuEntity.setUsername(data.get(0));                    //账户 要改的
-//                            yonghuEntity.setPassword("123456");//密码
-//                            yonghuEntity.setYonghuName(data.get(0));                    //用户姓名 要改的
-//                            yonghuEntity.setYonghuPhoto("");//详情和图片
-//                            yonghuEntity.setYonghuPhone(data.get(0));                    //用户手机号 要改的
-//                            yonghuEntity.setYonghuIdNumber(data.get(0));                    //用户身份证号 要改的
-//                            yonghuEntity.setSexTypes(Integer.valueOf(data.get(0)));   //性别 要改的
-//                            yonghuEntity.setNewMoney(data.get(0));                    //余额 要改的
-//                            yonghuEntity.setYonghuDelete(1);//逻辑删除字段
-//                            yonghuEntity.setCreateTime(date);//时间
                             yonghuList.add(yonghuEntity);
-
-
                             //把要查询是否重复的字段放入map中
                             //账户
                             if(seachFields.containsKey("username")){
@@ -325,7 +313,7 @@ public class YonghuController {
     }
 
     /**
-     * 注册 (已修改为手机号注册，并兼容MP 2.x写法)
+     * 注册 (已修改为手机号注册)
      */
     @IgnoreAuth
     @PostMapping(value = "/register")
