@@ -131,6 +131,7 @@ public class YonghuController {
                 .eq("yonghu_phone", yonghu.getYonghuPhone())
                 .or()
                 .eq("yonghu_id_number", yonghu.getYonghuIdNumber())
+                .andNew() // 保证前面的or条件作为一个整体
                 .eq("yonghu_delete", 1)
                 ;
 
@@ -313,46 +314,39 @@ public class YonghuController {
     }
 
     /**
-     * 注册 (已修改为手机号注册)
+     * 注册
      */
     @IgnoreAuth
     @PostMapping(value = "/register")
     public R register(@RequestBody YonghuEntity yonghu, HttpServletRequest request) {
-        // 1. 校验手机号
-        if(StringUtils.isBlank(yonghu.getYonghuPhone())){
-            return R.error("手机号不能为空");
+        // 1. 基础校验
+        if(StringUtils.isBlank(yonghu.getUsername())){
+            return R.error("账户不能为空");
         }
-
-        // 2. 强制绑定：用户名 = 手机号
-        yonghu.setUsername(yonghu.getYonghuPhone());
-
-        // 3. 如果昵称没填，默认使用手机号
+        if(StringUtils.isBlank(yonghu.getPassword())){
+            return R.error("密码不能为空");
+        }
         if(StringUtils.isBlank(yonghu.getYonghuName())){
-            yonghu.setYonghuName(yonghu.getYonghuPhone());
+            return R.error("用户姓名不能为空");
         }
 
-        // 4. 构建查询条件 (兼容 MyBatis Plus 2.x)
-        EntityWrapper<YonghuEntity> queryWrapper = new EntityWrapper<YonghuEntity>();
-
-        // 逻辑：(用户名=手机号 OR 手机号=手机号)
-        queryWrapper.eq("username", yonghu.getUsername())
+        // 2. 唯一性校验 (账户 OR 手机号 OR 身份证号)
+        Wrapper<YonghuEntity> queryWrapper = new EntityWrapper<YonghuEntity>()
+                .eq("username", yonghu.getUsername())
                 .or()
-                .eq("yonghu_phone", yonghu.getYonghuPhone());
+                .eq("yonghu_phone", yonghu.getYonghuPhone())
+                .or()
+                .eq("yonghu_id_number", yonghu.getYonghuIdNumber());
 
-        // 手动判断：只有当身份证号不为空时，才拼接 OR 身份证查询
-        if(StringUtils.isNotBlank(yonghu.getYonghuIdNumber())){
-            queryWrapper.or().eq("yonghu_id_number", yonghu.getYonghuIdNumber());
-        }
-
-        // 确保前面的 OR 条件是一个整体，再 AND delete=1
+        // 确保只检查未逻辑删除的用户
         queryWrapper.andNew().eq("yonghu_delete", 1);
 
         YonghuEntity yonghuEntity = yonghuService.selectOne(queryWrapper);
         if(yonghuEntity != null) {
-            return R.error("该手机号或身份证号已被注册");
+            return R.error("账户、手机号或身份证号已被注册");
         }
 
-        // 5. 初始化其他字段并保存
+        // 3. 初始设置
         yonghu.setNewMoney(0.0);
         yonghu.setYonghuDelete(1);
         yonghu.setCreateTime(new Date());

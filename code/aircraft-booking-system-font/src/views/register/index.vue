@@ -16,15 +16,15 @@
           </div>
         </el-form-item>
         <el-form-item>
-          <div class="title">手机号注册</div>
+          <div class="title">新用户注册</div>
         </el-form-item>
 
-        <el-form-item prop="yonghuPhone">
+        <el-form-item prop="username">
           <el-input
-              v-model="ruleForm.yonghuPhone"
-              :prefix-icon="Iphone"
+              v-model="ruleForm.username"
+              :prefix-icon="User"
               size="large"
-              placeholder="请输入手机号"
+              placeholder="请输入账户"
           />
         </el-form-item>
 
@@ -38,6 +38,41 @@
               placeholder="请输入密码"
           />
         </el-form-item>
+
+        <el-form-item prop="yonghuName">
+          <el-input
+              v-model="ruleForm.yonghuName"
+              :prefix-icon="User"
+              size="large"
+              placeholder="请输入用户姓名"
+          />
+        </el-form-item>
+
+        <el-form-item prop="yonghuPhone">
+          <el-input
+              v-model="ruleForm.yonghuPhone"
+              :prefix-icon="Iphone"
+              size="large"
+              placeholder="请输入手机号"
+          />
+        </el-form-item>
+
+        <el-form-item prop="yonghuIdNumber">
+          <el-input
+              v-model="ruleForm.yonghuIdNumber"
+              :prefix-icon="Postcard"
+              size="large"
+              placeholder="请输入身份证号"
+          />
+        </el-form-item>
+
+        <el-form-item prop="sexTypes">
+          <el-radio-group v-model="ruleForm.sexTypes">
+            <el-radio :label="1">男</el-radio>
+            <el-radio :label="2">女</el-radio>
+          </el-radio-group>
+        </el-form-item>
+
         <el-form-item>
           <span class="register" @click="$router.push('/login')">已有账号？去登录</span>
         </el-form-item>
@@ -58,41 +93,43 @@
 
 <script setup>
 import { register } from "@/api/login";
-import { useUserStore } from "@/stores/user";
-import { Lock, Iphone } from "@element-plus/icons-vue"; // 引入 Iphone 图标
+import { Lock, Iphone, User, Postcard } from "@element-plus/icons-vue";
 import router from "@/router";
 import { ElMessage } from "element-plus";
-
-const { SET_TOKEN, SET_USER_INFO } = useUserStore();
 
 const formRef = ref();
 
 const ruleForm = reactive({
-  yonghuPhone: "", // 绑定手机号
-  password: "",
+  username: "",       // 账户
+  password: "",       // 密码
+  yonghuName: "",     // 姓名
+  yonghuPhone: "",    // 手机号
+  yonghuIdNumber: "", // 身份证号
+  sexTypes: 1,        // 性别，默认男(1)
 });
 
 const rules = reactive({
-  yonghuPhone: [
-    {
-      required: true,
-      message: "请填写手机号",
-      trigger: "blur",
-    },
-    {
-      pattern: /^1[3-9]\d{9}$/,
-      message: "请输入正确的手机号码",
-      trigger: "blur"
-    },
+  username: [
+    { required: true, message: "请填写账户", trigger: "blur" },
   ],
   password: [
-    {
-      required: true,
-      message: "请填写密码",
-      trigger: "blur",
-    },
+    { required: true, message: "请填写密码", trigger: "blur" },
     { min: 6, max: 10, message: "密码长度应为 6 到 10 位", trigger: "blur" },
   ],
+  yonghuName: [
+    { required: true, message: "请填写用户姓名", trigger: "blur" },
+  ],
+  yonghuPhone: [
+    { required: true, message: "请填写手机号", trigger: "blur" },
+    { pattern: /^1[3-9]\d{9}$/, message: "请输入正确的手机号码", trigger: "blur" },
+  ],
+  yonghuIdNumber: [
+    { required: true, message: "请填写身份证号", trigger: "blur" },
+    { pattern: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/, message: "请输入正确的身份证号", trigger: "blur" }
+  ],
+  sexTypes: [
+    { required: true, message: "请选择性别", trigger: "change" }
+  ]
 });
 
 const submitForm = async (formEl) => {
@@ -101,15 +138,24 @@ const submitForm = async (formEl) => {
     if (valid) {
       // 构造提交参数
       const params = {
-        username: ruleForm.yonghuPhone, // 将手机号作为用户名提交，以便后续登录
-        yonghuPhone: ruleForm.yonghuPhone,
+        username: ruleForm.username,
         password: ruleForm.password,
-        yonghuName: "用户" + ruleForm.yonghuPhone.substring(7) // 默认给一个昵称
+        yonghuName: ruleForm.yonghuName,
+        yonghuPhone: ruleForm.yonghuPhone,
+        yonghuIdNumber: ruleForm.yonghuIdNumber,
+        sexTypes: ruleForm.sexTypes,
+        // 其他后端可能需要的默认字段，也可以由后端处理
+        newMoney: 0.0,
+        yonghuDelete: 1,
       };
 
-      await register(params);
-      ElMessage.success("注册成功，请使用手机号登录");
-      router.push('/login'); // 注册成功跳转登录
+      try {
+        await register(params);
+        ElMessage.success("注册成功，请使用账号登录");
+        router.push('/login');
+      } catch (error) {
+        console.error("注册失败", error);
+      }
     } else {
       console.log("error submit!", fields);
     }
@@ -122,7 +168,6 @@ const submitForm = async (formEl) => {
   position: relative;
   width: 100vw;
   height: 100vh;
-  // background-color: #fff;
   background-image: url("../../assets/images/swiper/2.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -135,6 +180,7 @@ const submitForm = async (formEl) => {
     height: 100%;
     background-color: #fff;
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
+    overflow-y: auto; // 防止表单过长溢出
 
     .login-form {
       width: 100%;
