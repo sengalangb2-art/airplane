@@ -11,7 +11,7 @@
  Target Server Version : 80041 (8.0.41)
  File Encoding         : 65001
 
- Date: 09/01/2026 15:46:51
+ Date: 13/01/2026 14:34:07
 */
 
 SET NAMES utf8mb4;
@@ -31,7 +31,7 @@ CREATE TABLE `dictionary`  (
   `beizhu` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
   `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 152 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '字典表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 154 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '字典表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of dictionary
@@ -68,6 +68,7 @@ INSERT INTO `dictionary` VALUES (148, 'jipiao_types', '航班类型', 8, '波音
 INSERT INTO `dictionary` VALUES (149, 'jipiao_types', '航班类型', 9, '商飞919', NULL, NULL, '2026-01-09 15:03:03');
 INSERT INTO `dictionary` VALUES (150, 'jipiao_types', '航班类型', 10, '空客320', NULL, NULL, '2026-01-09 15:03:29');
 INSERT INTO `dictionary` VALUES (151, 'jipiao_types', '航班类型', 11, '空客319', NULL, NULL, '2026-01-09 15:04:20');
+INSERT INTO `dictionary` VALUES (153, 'jipiao_types', '航班类型', 12, '波音737-700', NULL, NULL, '2026-01-09 16:02:45');
 
 -- ----------------------------
 -- Table structure for jipiao
@@ -92,27 +93,37 @@ CREATE TABLE `jipiao`  (
   `jipiao_first_num` int NULL DEFAULT 0 COMMENT '头等舱座位数',
   `jipiao_arrival_time` timestamp NULL DEFAULT NULL COMMENT '到达时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '航班信息' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '航班信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of jipiao
 -- ----------------------------
-INSERT INTO `jipiao` VALUES (1, 'JN6354', 'upload/jipiao1.jpg', 11, 321.76, '出发地1', '目的地1', '2025-02-17 14:38:39', 20, 1, 1, 1, '<p>航班详情1</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
-INSERT INTO `jipiao` VALUES (2, 'OJ2562', 'upload/jipiao2.jpg', 10, 73.91, '出发地2', '目的地2', '2025-02-17 14:38:39', 20, 1, 2, 1, '<p>航班详情2</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
-INSERT INTO `jipiao` VALUES (3, 'KH2536', 'upload/jipiao3.jpg', 2, 142.30, '出发地3', '目的地3', '2025-03-15 14:38:39', 20, 1, 2, 1, '<p>航班详情3</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
-INSERT INTO `jipiao` VALUES (4, 'JH7522', 'upload/jipiao4.jpg', 5, 248.59, '出发地4', '目的地4', '2025-04-18 14:38:39', 20, 1, 1, 1, '<p>航班详情4</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
-INSERT INTO `jipiao` VALUES (5, 'JK3385', 'upload/jipiao5.jpg', 6, 33.81, '出发地5', '目的地5', '2025-04-26 14:38:39', 20, 1, 1, 1, '<p>航班详情5</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
-INSERT INTO `jipiao` VALUES (6, 'GF2545', 'upload/jipiao6.jpg', 5, 399.54, '出发地6', '目的地6', '2025-05-02 14:38:39', 20, 1, 2, 1, '<p>航班详情6</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
-INSERT INTO `jipiao` VALUES (7, 'WS5324', 'upload/jipiao7.jpg', 3, 497.62, '出发地7', '目的地7', '2025-04-18 14:38:39', 20, 1, 2, 1, '<p>航班详情7</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
-INSERT INTO `jipiao` VALUES (8, 'LG9856', 'upload/jipiao8.jpg', 2, 245.57, '出发地8', '目的地8', '2025-06-01 14:38:39', 20, 1, 2, 1, '<p>航班详情8</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
-INSERT INTO `jipiao` VALUES (9, 'TY8622', 'upload/jipiao9.jpg', 1, 317.00, '出发地9', '目的地9', '2025-02-17 14:38:39', 20, 1, 1, 1, '<p>航班详情9</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
-INSERT INTO `jipiao` VALUES (10, 'ZK7892', 'upload/jipiao10.jpg', 2, 218.25, '出发地10', '目的地10', '2025-03-15 14:38:39', 20, 1, 1, 1, '<p>航班详情10</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
-INSERT INTO `jipiao` VALUES (11, 'ZM5632', 'upload/jipiao11.jpg', 2, 407.30, '出发地11', '目的地11', '2025-02-28 14:38:39', 20, 1, 1, 1, '<p>航班详情11</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
-INSERT INTO `jipiao` VALUES (12, 'RY5503', 'upload/jipiao12.jpg', 2, 382.31, '出发地12', '目的地12', '2025-03-15 14:38:39', 20, 1, 1, 1, '<p>航班详情12</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
-INSERT INTO `jipiao` VALUES (13, 'RY8867', 'upload/jipiao13.jpg', 3, 184.55, '长乐国际机场', '首都国际机场', '2025-02-21 23:22:15', 40, 1, 1, 1, '<p>航班详情13</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
-INSERT INTO `jipiao` VALUES (14, 'RY8869', 'upload/jipiao14.jpg', 1, 300.00, '厦门高崎机场', '北京大兴国际机场', '2025-02-18 23:20:51', 60, 1, 1, 1, '<p>航班详情14</p>', '2025-02-03 14:38:39', 600.00, 12, NULL);
+INSERT INTO `jipiao` VALUES (1, 'JN6354', 'upload/jipiao1.jpg', 11, 321.76, '出发地1', '目的地1', '2025-02-17 14:38:39', 20, 1, 1, 2, '<p>航班详情1</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (2, 'OJ2562', 'upload/jipiao2.jpg', 10, 73.91, '出发地2', '目的地2', '2025-02-17 14:38:39', 20, 1, 2, 2, '<p>航班详情2</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (3, 'KH2536', 'upload/jipiao3.jpg', 2, 142.30, '出发地3', '目的地3', '2025-03-15 14:38:39', 20, 1, 2, 2, '<p>航班详情3</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (4, 'JH7522', 'upload/jipiao4.jpg', 5, 248.59, '出发地4', '目的地4', '2025-04-18 14:38:39', 20, 1, 1, 2, '<p>航班详情4</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (5, 'JK3385', 'upload/jipiao5.jpg', 6, 33.81, '出发地5', '目的地5', '2025-04-26 14:38:39', 20, 1, 1, 2, '<p>航班详情5</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (6, 'GF2545', 'upload/jipiao6.jpg', 5, 399.54, '出发地6', '目的地6', '2025-05-02 14:38:39', 20, 1, 2, 2, '<p>航班详情6</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (7, 'WS5324', 'upload/jipiao7.jpg', 3, 497.62, '出发地7', '目的地7', '2025-04-18 14:38:39', 20, 1, 2, 2, '<p>航班详情7</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (8, 'LG9856', 'upload/jipiao8.jpg', 2, 245.57, '出发地8', '目的地8', '2025-06-01 14:38:39', 20, 1, 2, 2, '<p>航班详情8</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (9, 'TY8622', 'upload/jipiao9.jpg', 1, 317.00, '出发地9', '目的地9', '2025-02-17 14:38:39', 20, 1, 1, 2, '<p>航班详情9</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (10, 'ZK7892', 'upload/jipiao10.jpg', 2, 218.25, '出发地10', '目的地10', '2025-03-15 14:38:39', 20, 1, 1, 2, '<p>航班详情10</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (11, 'ZM5632', 'upload/jipiao11.jpg', 2, 407.30, '出发地11', '目的地11', '2025-02-28 14:38:39', 20, 1, 1, 2, '<p>航班详情11</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (12, 'RY5503', 'upload/jipiao12.jpg', 2, 382.31, '出发地12', '目的地12', '2025-03-15 14:38:39', 20, 1, 1, 2, '<p>航班详情12</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (13, 'RY8867', 'upload/jipiao13.jpg', 3, 184.55, '长乐国际机场', '首都国际机场', '2025-02-21 23:22:15', 40, 1, 1, 2, '<p>航班详情13</p>', '2025-02-03 14:38:39', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (14, 'RY8869', 'upload/jipiao14.jpg', 1, 300.00, '厦门高崎机场', '北京大兴国际机场', '2025-02-18 23:20:51', 60, 1, 1, 2, '<p>航班详情14</p>', '2025-02-03 14:38:39', 600.00, 12, NULL);
 INSERT INTO `jipiao` VALUES (28, 'sdsd', 'upload/1740592557314.JPG', 11, 123.00, 'asas', 'asas', NULL, 34, 1, 1, 2, NULL, '2025-02-27 01:55:57', NULL, 0, NULL);
 INSERT INTO `jipiao` VALUES (29, '飒飒', 'upload/1742477428867.png', 11, 5555.00, '飒飒', '水水水水', '2025-03-12 00:00:00', 300, 1, 1, 2, NULL, '2025-03-20 21:30:29', NULL, 0, NULL);
+INSERT INTO `jipiao` VALUES (30, '111', 'upload/1767947481946.png', 11, 1111.00, '111', '111', '2026-01-09 16:31:06', 111, 1, 1, 2, NULL, '2026-01-09 16:31:22', 11111.00, 1111, '2026-01-14 16:52:09');
+INSERT INTO `jipiao` VALUES (31, '南航CZ2129', 'upload/1767959634462.jpg', 10, 350.00, '广州白云机场', '重庆江北机场', '2026-01-09 19:05:52', 59, 1, 1, 1, NULL, '2026-01-09 19:53:55', 899.00, 20, '2026-01-09 21:30:52');
+INSERT INTO `jipiao` VALUES (32, '厦航MF4316', 'upload/1767959854570.jpg', 10, 499.00, '广州白云机场', '昆明长水机场', '2026-01-10 07:00:00', 80, 1, 1, 1, NULL, '2026-01-09 19:57:35', 996.00, 30, '2026-01-10 09:45:00');
+INSERT INTO `jipiao` VALUES (33, '吉祥航空HO7351', 'upload/1767960004545.jpg', 12, 666.00, '广州白云机场', '郑州新郑机场', '2026-01-11 17:55:00', 80, 1, 1, 1, NULL, '2026-01-09 20:00:05', 1200.00, 30, '2026-01-11 20:15:00');
+INSERT INTO `jipiao` VALUES (34, '海航HU7012', 'upload/1767960130841.jpg', 1, 657.00, '广州白云机场', '海南美兰机场', '2026-01-12 23:00:00', 60, 1, 1, 1, NULL, '2026-01-09 20:02:11', 1023.00, 20, '2026-01-13 01:00:00');
+INSERT INTO `jipiao` VALUES (35, '东航MU6955', 'upload/1767960230599.png', 3, 499.00, '广州白云机场', '西安咸阳机场', '2026-01-13 06:55:00', 66, 1, 1, 1, NULL, '2026-01-09 20:03:51', 999.00, 20, '2026-01-13 09:35:00');
+INSERT INTO `jipiao` VALUES (36, '川航3U1051', 'upload/1767960359378.png', 10, 538.00, '广州白云机场', '北京大兴机场', '2026-01-15 20:00:00', 60, 1, 1, 1, NULL, '2026-01-09 20:05:59', 1196.00, 30, '2026-01-15 22:55:00');
+INSERT INTO `jipiao` VALUES (37, '国泰航空CX983', 'upload/1767960504783.jpg', 5, 1110.00, '广州白云机场', '香港国际机场', '2026-01-16 10:15:00', 80, 1, 1, 1, NULL, '2026-01-09 20:08:25', 2630.00, 20, '2026-01-16 11:45:00');
+INSERT INTO `jipiao` VALUES (38, '春秋航空9C7395', 'upload/1767960706676.jpg', 7, 690.00, '广州白云机场', '甘肃兰州机场', '2026-01-17 06:45:00', 90, 1, 1, 1, NULL, '2026-01-09 20:11:47', 1600.00, 30, '2026-01-17 10:15:00');
+INSERT INTO `jipiao` VALUES (39, '国航CA787', 'upload/1767960837915.jpeg', 5, 5271.00, '北京首都机场', '新加坡樟宜机场', '2026-01-18 09:45:00', 90, 1, 1, 1, NULL, '2026-01-09 20:13:58', 9277.00, 30, '2026-01-18 16:25:00');
 
 -- ----------------------------
 -- Table structure for jipiao_collection
@@ -163,7 +174,7 @@ CREATE TABLE `jipiao_order`  (
   `order_pay_order` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '支付宝订单号',
   `jieshuanshijian` timestamp(6) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '机票预订' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '机票预订' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of jipiao_order
@@ -192,6 +203,7 @@ INSERT INTO `jipiao_order` VALUES (21, '1767941580492', 14, 3, 300.00, 101, '55'
 INSERT INTO `jipiao_order` VALUES (22, '1767941588534', 14, 3, 300.00, 101, '53', '2026-01-09', '2026-01-09 14:53:09', '2026-01-09 14:53:09', '待支付', 'JIPIAO_22_1767941595515', NULL);
 INSERT INTO `jipiao_order` VALUES (23, '1767941607982', 14, 3, 300.00, 101, '51', '2026-01-09', '2026-01-09 14:53:28', '2026-01-09 14:53:28', '已支付', NULL, '2026-01-09 14:53:30.172000');
 INSERT INTO `jipiao_order` VALUES (24, '1767941621325', 12, 3, 382.31, 101, '13', '2026-01-09', '2026-01-09 14:53:41', '2026-01-09 14:53:41', '已支付', NULL, '2026-01-09 14:53:42.757000');
+INSERT INTO `jipiao_order` VALUES (25, '1767961036614', 39, 10, 9277.00, 101, '1', '2026-01-09', '2026-01-09 20:17:17', '2026-01-09 20:17:17', '已支付', NULL, '2026-01-09 20:17:20.323000');
 
 -- ----------------------------
 -- Table structure for news
@@ -246,10 +258,10 @@ CREATE TABLE `token`  (
 -- Records of token
 -- ----------------------------
 INSERT INTO `token` VALUES (1, 1, 'cyan', 'yonghu', '用户', 'lrcph0junfk90hepnmzegopq31ocy7cj', '2025-02-06 14:42:29', '2025-02-16 23:01:27');
-INSERT INTO `token` VALUES (2, 1, 'admin', 'users', '管理员', 'c8e5xclrxhhz0yslf0ikdpfnzjsilm2r', '2025-02-06 15:12:06', '2026-01-09 16:42:32');
-INSERT INTO `token` VALUES (3, 3, 'cyang', 'yonghu', '用户', 'lxjunot7u3m0oxyzfu3398tbqs2a83bz', '2025-02-06 23:26:30', '2026-01-09 15:26:24');
+INSERT INTO `token` VALUES (2, 1, 'admin', 'users', '管理员', 'xwxci2913cinrqaw2h6cxpxigma2pkqj', '2025-02-06 15:12:06', '2026-01-09 20:50:49');
+INSERT INTO `token` VALUES (3, 3, 'cyang', 'yonghu', '用户', 'vc8nfs37cze4ssjrs9do03374v8nut8v', '2025-02-06 23:26:30', '2026-01-09 18:26:46');
 INSERT INTO `token` VALUES (4, 9, '20250303', 'yonghu', '用户', 'quhmzbxmu9k2g6ue5zr7j95ob2ekgzti', '2025-03-20 14:41:27', '2025-03-20 15:41:27');
-INSERT INTO `token` VALUES (5, 10, '18407590373', 'yonghu', '用户', 'dm5vbvf0ly3ouzodhrcmiyx00upidmfo', '2026-01-08 21:11:53', '2026-01-08 22:11:53');
+INSERT INTO `token` VALUES (5, 10, '18407590373', 'yonghu', '用户', '6oa1my2i3dy3uyxkwznqsi6o1f624r6c', '2026-01-08 21:11:53', '2026-01-09 21:16:09');
 
 -- ----------------------------
 -- Table structure for users
@@ -291,10 +303,10 @@ CREATE TABLE `yonghu`  (
 -- ----------------------------
 -- Records of yonghu
 -- ----------------------------
-INSERT INTO `yonghu` VALUES (1, 'cindy', '123456', 'cindy', 'upload/1740592774940.png', '15600959523', '410224199010102001', 1, 9649.62, 1, '2025-01-16 14:38:39');
-INSERT INTO `yonghu` VALUES (2, '13500505050', '123456', '小黄', 'upload/1740592763987.jpg', '13500505050', '410224199010102002', 1, 962.45, 1, '2025-01-02 14:38:39');
-INSERT INTO `yonghu` VALUES (3, 'cyang', '123456', '小杨', 'upload/1742477385307.jpg', '13200202020', '410224199010102003', 2, 90680.00, 1, '2025-01-04 14:38:39');
-INSERT INTO `yonghu` VALUES (9, '20250303', '123456', '小花', NULL, '13500525656', '350325200304051265', 1, 90000.00, 1, '2025-03-20 14:41:20');
-INSERT INTO `yonghu` VALUES (10, '18407590373', 'qwe123456', '用户0373', NULL, '18407590373', NULL, NULL, 0.00, 1, '2026-01-08 21:11:41');
+INSERT INTO `yonghu` VALUES (1, 'cindy', '123456', 'cindy', 'upload/1740592774940.png', '15600959523', '410224199010102001', 1, 9649.62, 2, '2025-01-16 14:38:39');
+INSERT INTO `yonghu` VALUES (2, '13500505050', '123456', '小黄', 'upload/1740592763987.jpg', '13500505050', '410224199010102002', 1, 962.45, 2, '2025-01-02 14:38:39');
+INSERT INTO `yonghu` VALUES (3, 'cyang', '123456', '小杨', 'upload/1742477385307.jpg', '13200202020', '410224199010102003', 2, 90680.00, 2, '2025-01-04 14:38:39');
+INSERT INTO `yonghu` VALUES (9, '20250303', '123456', '小花', NULL, '13500525656', '350325200304051265', 1, 90000.00, 2, '2025-03-20 14:41:20');
+INSERT INTO `yonghu` VALUES (10, '18407590373', 'qwe123456', '姚钟华', NULL, '18407590373', '111111111111110025', 1, 723.00, 1, '2026-01-08 21:11:41');
 
 SET FOREIGN_KEY_CHECKS = 1;
