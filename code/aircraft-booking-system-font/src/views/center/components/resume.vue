@@ -7,15 +7,15 @@
   </div>
   <div class="flex">
     <el-tabs
-      tab-position="left"
-      v-model="activeName"
-      style="height: 200px"
-      @tab-change="initGetAirOrder">
+        tab-position="left"
+        v-model="activeName"
+        style="height: 200px"
+        @tab-change="initGetAirOrder">
       <el-tab-pane
-        v-for="item in tabs"
-        :key="item.id"
-        :label="item.indexName"
-        :name="item.codeIndex"></el-tab-pane>
+          v-for="item in tabs"
+          :key="item.id"
+          :label="item.indexName"
+          :name="item.codeIndex"></el-tab-pane>
     </el-tabs>
     <div class="content">
       <div class="top flex align-center">
@@ -27,9 +27,9 @@
       <div class="form">
         <template v-if="tableData.length">
           <div
-            class="item"
-            v-for="(item, index) in tableData"
-            :key="index">
+              class="item"
+              v-for="(item, index) in tableData"
+              :key="index">
             <div class="header flex align-center">
               <div>订单号: {{ item.jipiaoOrderUuidNumber }}</div>
               <div class="m-l-10">订票时间: {{ item.createTime }}</div>
@@ -49,7 +49,7 @@
               <div>{{ item.jipiaoOrderTruePrice }} 元</div>
               <div>
                 <el-tag
-                  :type="
+                    :type="
                     item.jipiaoOrderTypes == 101
                       ? 'primary'
                       : item.jipiaoOrderTypes == 102
@@ -58,23 +58,30 @@
                       ? 'warning'
                       : 'success'
                   "
-                  >{{ item.jipiaoOrderValue }}</el-tag
+                >{{ item.jipiaoOrderValue }}</el-tag
                 >
               </div>
               <div>
                 <el-button
-                  type="danger"
-                  v-if="activeName == '101'"
-                  plain
-                  @click="onCancelTicket(item)"
-                  >退票</el-button
+                    type="warning"
+                    v-if="activeName == '101'"
+                    plain
+                    @click="onChangeTicket(item)"
+                >改签</el-button
                 >
                 <el-button
-                  type="primary"
-                  v-if="activeName == '103'"
-                  plain
-                  @click="onGetTicket(item)"
-                  >取票</el-button
+                    type="danger"
+                    v-if="activeName == '101'"
+                    plain
+                    @click="onCancelTicket(item)"
+                >退票</el-button
+                >
+                <el-button
+                    type="primary"
+                    v-if="activeName == '103'"
+                    plain
+                    @click="onGetTicket(item)"
+                >取票</el-button
                 >
               </div>
             </div>
@@ -87,172 +94,194 @@
 </template>
 
 <script setup>
-  import {
-    getAirOrderType,
-    getAirOrder,
-    getAirOrderReceiving,
-    getAirOrderRefund,
-  } from '@/api/center';
-  import { messageBox } from '@/utils/tools';
-  import { ElMessage } from 'element-plus';
+import {
+  getAirOrderType,
+  getAirOrder,
+  getAirOrderReceiving,
+  getAirOrderRefund,
+} from '@/api/center';
+import { messageBox } from '@/utils/tools';
+import { ElMessage } from 'element-plus';
+import { useRouter } from 'vue-router'; // 引入 router
 
-  const activeName = ref(null);
-  const tabs = ref([]);
-  const tableData = ref([]);
+const router = useRouter();
+const activeName = ref(null);
+const tabs = ref([]);
+const tableData = ref([]);
 
-  const formatImg = computed(() => {
-    return function (url) {
-      return import.meta.env.VITE_APP_BASE_IP + '/aircraft-booking-api/' + url;
-    };
-  });
-
-  const initData = async () => {
-    const { data } = await getAirOrderType({
-      page: 1,
-      limit: 9999,
-      sort: '',
-      order: '',
-      dicCode: 'jipiao_order_types',
-      t: new Date().getTime(),
-    });
-    tabs.value = data.list.reverse();
-    if (tabs.value.length) {
-      activeName.value = tabs.value[0].codeIndex;
-    }
-    initGetAirOrder();
+const formatImg = computed(() => {
+  return function (url) {
+    return import.meta.env.VITE_APP_BASE_IP + '/aircraft-booking-api/' + url;
   };
+});
 
-  async function initGetAirOrder() {
-    const { data } = await getAirOrder({
-      page: 1,
-      limit: 9999,
-      sort: 'id',
-      order: 'desc',
-      jipiaoOrderUuidNumber: '',
-      jipiaoOrderTypes: activeName.value,
-      buyZuoweiNumber: '',
-      t: new Date().getTime(),
-    });
-    tableData.value = data.list;
-  }
-
-  async function onGetTicket(item) {
-    const res = await messageBox({
-      title: '提示',
-      type: 'warning',
-      'show-close': false,
-      closeOnClickModal: false,
-      showCancelButton: true,
-      confirmButtonText: '是',
-      cancelButtonText: '否',
-      message: `确定要取票航班：${item.jipiaoName}，订单号为：${item.jipiaoOrderUuidNumber}，乘车人姓名：${item.yonghuName}的机票吗？`,
-    });
-    if (!res) return;
-    await getAirOrderReceiving({
-      id: item.id,
-      t: new Date().getTime(),
-    });
-    ElMessage.success('取票成功');
-    initData();
-  }
-
-  async function onCancelTicket(item) {
-    const res = await messageBox({
-      title: '提示',
-      type: 'warning',
-      'show-close': false,
-      closeOnClickModal: false,
-      showCancelButton: true,
-      confirmButtonText: '是',
-      cancelButtonText: '否',
-      message: `确定要退掉航班：${item.jipiaoName}，订单号为：${item.jipiaoOrderUuidNumber}，乘车人姓名：${item.yonghuName}的机票吗？`,
-    });
-    if (!res) return;
-    await getAirOrderRefund({
-      id: item.id,
-      t: new Date().getTime(),
-    });
-    ElMessage.success('退票成功');
-    initData();
-  }
-
-  onActivated(() => {
-    initData();
+const initData = async () => {
+  const { data } = await getAirOrderType({
+    page: 1,
+    limit: 9999,
+    sort: '',
+    order: '',
+    dicCode: 'jipiao_order_types',
+    t: new Date().getTime(),
   });
+  tabs.value = data.list.reverse();
+  if (tabs.value.length) {
+    activeName.value = tabs.value[0].codeIndex;
+  }
+  initGetAirOrder();
+};
+
+async function initGetAirOrder() {
+  const { data } = await getAirOrder({
+    page: 1,
+    limit: 9999,
+    sort: 'id',
+    order: 'desc',
+    jipiaoOrderUuidNumber: '',
+    jipiaoOrderTypes: activeName.value,
+    buyZuoweiNumber: '',
+    t: new Date().getTime(),
+  });
+  tableData.value = data.list;
+}
+
+// 新增：改签逻辑
+async function onChangeTicket(item) {
+  const res = await messageBox({
+    title: '提示',
+    type: 'warning',
+    'show-close': false,
+    closeOnClickModal: false,
+    showCancelButton: true,
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    message: `确定要改签航班：${item.jipiaoName} 吗？\n改签将跳转到首页重新选择航班，差价多退少补。`,
+  });
+  if (!res) return;
+
+  // 将原订单ID存入 SessionStorage
+  sessionStorage.setItem('changeOrderId', item.id);
+  // 跳转到首页 (假设路由为 /)
+  router.push('/');
+}
+
+async function onGetTicket(item) {
+  const res = await messageBox({
+    title: '提示',
+    type: 'warning',
+    'show-close': false,
+    closeOnClickModal: false,
+    showCancelButton: true,
+    confirmButtonText: '是',
+    cancelButtonText: '否',
+    message: `确定要取票航班：${item.jipiaoName}，订单号为：${item.jipiaoOrderUuidNumber}，乘车人姓名：${item.yonghuName}的机票吗？`,
+  });
+  if (!res) return;
+  await getAirOrderReceiving({
+    id: item.id,
+    t: new Date().getTime(),
+  });
+  ElMessage.success('取票成功');
+  initData();
+}
+
+async function onCancelTicket(item) {
+  const res = await messageBox({
+    title: '提示',
+    type: 'warning',
+    'show-close': false,
+    closeOnClickModal: false,
+    showCancelButton: true,
+    confirmButtonText: '是',
+    cancelButtonText: '否',
+    message: `确定要退掉航班：${item.jipiaoName}，订单号为：${item.jipiaoOrderUuidNumber}，乘车人姓名：${item.yonghuName}的机票吗？`,
+  });
+  if (!res) return;
+  await getAirOrderRefund({
+    id: item.id,
+    t: new Date().getTime(),
+  });
+  ElMessage.success('退票成功');
+  initData();
+}
+
+onActivated(() => {
+  initData();
+});
 </script>
 
 <style scoped lang="scss">
-  .title {
-    font-size: 18px;
-    font-weight: 500;
-    color: #4169e1;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #eee;
-  }
+.title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #4169e1;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee;
+}
 
-  .content {
-    flex: 1;
+.content {
+  flex: 1;
 
-    .top {
-      width: 100%;
-      background-color: #f5f5f5;
-      padding: 10px 20px;
-      border-radius: 5px;
-      margin-bottom: 15px;
+  .top {
+    width: 100%;
+    background-color: #f5f5f5;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-bottom: 15px;
 
-      & > div {
-        flex: 1;
+    & > div {
+      flex: 1;
 
-        &:first-child {
-          flex: 4;
-        }
+      &:first-child {
+        flex: 4;
       }
     }
+  }
 
-    .form {
+  .form {
+    width: 100%;
+
+    .item {
       width: 100%;
+      border-bottom: 1px solid #eee;
+      margin-bottom: 15px;
 
-      .item {
-        width: 100%;
-        border-bottom: 1px solid #eee;
-        margin-bottom: 15px;
+      .header {
+        color: #111d34;
+        font-size: 12px;
+        font-weight: 500;
+        background-color: #f5f5f5;
+        padding: 15px 20px;
+        border-radius: 5px;
+      }
 
-        .header {
-          color: #111d34;
-          font-size: 12px;
-          font-weight: 500;
-          background-color: #f5f5f5;
-          padding: 15px 20px;
-          border-radius: 5px;
-        }
+      .body {
+        padding: 10px 20px;
+        background-color: #fff;
 
-        .body {
-          padding: 10px 20px;
-          background-color: #fff;
+        & > div {
+          flex: 1;
 
-          & > div {
-            flex: 1;
+          &:first-child {
+            flex: 4;
 
-            &:first-child {
-              flex: 4;
+            img {
+              width: 85x;
+              height: 75px;
+              border-radius: 5px;
+            }
 
-              img {
-                width: 85x;
-                height: 75px;
-                border-radius: 5px;
-              }
-
-              & > div {
-                margin-left: 10px;
-                height: 100%;
-                color: #111d34;
-                font-size: 14px;
-                font-weight: 500;
-              }
+            & > div {
+              margin-left: 10px;
+              height: 100%;
+              color: #111d34;
+              font-size: 14px;
+              font-weight: 500;
             }
           }
         }
       }
     }
   }
+}
 </style>

@@ -497,7 +497,121 @@ public class JipiaoOrderController {
         jipiaoOrderService.updateById( jipiaoOrderEntity);
         return R.ok();
     }
+    /**
+     * 改签
+     */
+    @RequestMapping("/changeTicket")
+    public R changeTicket(@RequestBody Map<String, Object> params, HttpServletRequest request) {
+        logger.debug("changeTicket方法:,,Controller:{},,params:{}", this.getClass().getName(), JSONObject.toJSONString(params));
 
+        try {
+            // 1. 获取并解析参数
+            Integer orderId = Integer.valueOf(String.valueOf(params.get("id"))); // 原订单ID
+            Integer newJipiaoId = Integer.valueOf(String.valueOf(params.get("newJipiaoId"))); // 新航班ID
+            String newBuyZuoweiNumber = String.valueOf(params.get("newBuyZuoweiNumber")); // 新座位号，例如 "1,2"
+            String newBuyZuoweiTimeStr = String.valueOf(params.get("newBuyZuoweiTime")); // 新日期 "yyyy-MM-dd"
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date newBuyZuoweiTime = sdf.parse(newBuyZuoweiTimeStr);
+
+            // 2. 查询原订单信息
+            JipiaoOrderEntity oldOrder = jipiaoOrderService.selectById(orderId);
+            if (oldOrder == null) {
+                return R.error(511, "原订单不存在");
+            }
+            if (oldOrder.getJipiaoOrderTypes() == 102) { // 假设102为已退款/无效状态
+                return R.error(511, "该订单已退票，无法改签");
+            }
+
+            // 3. 查询新航班信息
+            JipiaoEntity newJipiaoEntity = jipiaoService.selectById(newJipiaoId);
+            if (newJipiaoEntity == null) {
+                return R.error(511, "查不到新航班信息");
+            }
+            if (newJipiaoEntity.getJipiaoNewMoney() == null) {
+                return R.error(511, "新航班价格信息缺失");
+            }
+
+            // 4. 校验新座位是否可用 (逻辑参考 add 方法)
+            String[] newSeatList = newBuyZuoweiNumber.split(",");
+
+            // 查询新航班在指定日期的所有有效订单（排除当前正在改签的这个订单，防止自己占用的座位被误判）
+            List<JipiaoOrderEntity> existingOrders = jipiaoOrderService.selectList(new EntityWrapper<JipiaoOrderEntity>()
+                    .eq("jipiao_id", newJipiaoId)
+                    .eq("buy_zuowei_time", newBuyZuoweiTimeStr) // 数据库中通常存的是日期字符串或Date，这里需确保格式匹配
+                    .notIn("jipiao_order_types", 102) // 排除已退票的
+            );
+
+            List<String> occupiedSeats = new ArrayList<>();
+            for (JipiaoOrderEntity order : existingOrders) {
+                // 如果是改签到同一航班同一天，需要排除掉当前订单原有的座位占用记录，否则会提示座位被自己占用了
+                // 但通常改签意味着换座位或换时间，这里做个严谨判断：
+                if (order.getId().equals(orderId)) {
+                    continue;
+                }
+                occupiedSeats.addAll(Arrays.asList(order.getBuyZuoweiNumber().split(",")));
+            }
+
+            for (String seat : newSeatList) {
+                if (occupiedSeats.contains(seat)) {
+                    return R.error(511, "座位 " + seat + " 已经被占用，请重新选择");
+                }
+            }
+
+            // 5. 计算新票总价 (区分头等舱和经济舱)
+            double newTotalPrice = 0.0;
+            int firstClassNum = newJipiaoEntity.getJipiaoFirstNum() != null ? newJipiaoEntity.getJipiaoFirstNum() : 0;
+            double firstClassPrice = newJipiaoEntity.getJipiaoFirstMoney() != null ? newJipiaoEntity.getJipiaoFirstMoney() : newJipiaoEntity.getJipiaoNewMoney();
+            double economyPrice = newJipiaoEntity.getJipiaoNewMoney();
+
+            for (String seatStr : newSeatList) {
+                int seatNo = Integer.parseInt(seatStr);
+                if (seatNo <= firstClassNum) {
+                    newTotalPrice += firstClassPrice;
+                } else {
+                    newTotalPrice += economyPrice;
+                }
+            }
+
+            // 6. 计算差价并处理用户余额
+            double oldPrice = oldOrder.getJipiaoOrderTruePrice();
+            double diffPrice = newTotalPrice - oldPrice; // 差价：正数代表需要补款，负数代表需要退款
+
+            Integer userId = (Integer) request.getSession().getAttribute("userId");
+            YonghuEntity user = yonghuService.selectById(userId);
+            if (user == null) return R.error(511, "用户不存在");
+
+            if (diffPrice > 0) {
+                // 需要补差价
+                if (user.getNewMoney() < diffPrice) {
+                    return R.error(511, "余额不足以支付改签差价，需补: " + diffPrice + "元");
+                }
+                user.setNewMoney(user.getNewMoney() - diffPrice);
+            } else if (diffPrice < 0) {
+                // 退还差价 (注意 diffPrice 是负数，这里加绝对值或直接加负数)
+                user.setNewMoney(user.getNewMoney() + Math.abs(diffPrice));
+            }
+
+            // 7. 更新数据
+            yonghuService.updateById(user); // 更新余额
+
+            // 更新订单信息
+            oldOrder.setJipiaoId(newJipiaoId); // 更新为新航班
+            oldOrder.setBuyZuoweiNumber(newBuyZuoweiNumber); // 更新座位
+            oldOrder.setBuyZuoweiTime(newBuyZuoweiTime); // 更新日期
+            oldOrder.setJipiaoOrderTruePrice(newTotalPrice); // 更新实付价格
+            // 状态保持不变（通常改签后还是"已支付"状态，如果是未支付订单改签则保持未支付，这里假设改签针对的是已支付订单）
+            // 如果需要重置状态，可以：oldOrder.setJipiaoOrderTypes(101);
+
+            jipiaoOrderService.updateById(oldOrder);
+
+            return R.ok().put("msg", "改签成功");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return R.error(511, "改签失败：" + e.getMessage());
+        }
+    }
     /**
      * 支付宝支付
      */

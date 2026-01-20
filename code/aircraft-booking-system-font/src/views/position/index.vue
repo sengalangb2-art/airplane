@@ -27,6 +27,17 @@
       </div>
     </div>
     <div class="wrapper">
+      <el-alert
+          v-if="changeOrderId"
+          title="您当前处于改签模式"
+          type="warning"
+          description="请选择新的座位并点击订票，系统将自动计算差价并从余额中多退少补。"
+          show-icon
+          close-text="取消改签"
+          @close="cancelChangeMode"
+          class="m-b-20"
+      />
+
       <div class="top flex justify-between align-center">
         <img :src="`${url}/aircraft-booking-api/${positions.jipiaoPhoto}`" />
         <div class="flex flex-column justify-between">
@@ -84,7 +95,7 @@
                 plain
                 :disabled="positions.hangbanTypes != '1'"
                 @click="onAddOrder"
-            >立即订票</el-button
+            >{{ changeOrderId ? '确认改签' : '立即订票' }}</el-button
             >
           </div>
         </div>
@@ -138,35 +149,6 @@
     </div>
 
     <el-dialog
-        v-model="dialogFormVisible"
-        title="baio"
-        width="500">
-      <el-form :model="form">
-        <el-form-item label="简历">
-          <el-select
-              v-model="form.resume"
-              placeholder="请选择简历">
-            <el-option
-                v-for="item in resumeList"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"></el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <div class="flex align-center justify-end">
-          <el-button @click="onCancel">取消</el-button>
-          <el-button
-              type="primary"
-              @click="onConfirm">
-            确认
-          </el-button>
-        </div>
-      </template>
-    </el-dialog>
-
-    <el-dialog
         v-model="payDialogVisible"
         title="支付宝支付"
         width="800px"
@@ -181,12 +163,6 @@
         <el-icon class="is-loading"><Loading /></el-icon>
         <span class="m-l-10">正在加载支付页面...</span>
       </div>
-    </el-dialog>
-    <el-dialog
-        v-model="payDialogVisible"
-        title="支付宝支付"
-        width="800px"
-        :before-close="closePayDialog">
     </el-dialog>
 
     <el-dialog
@@ -221,7 +197,7 @@
 <script setup>
 import { ElMessageBox, ElMessage, ElIcon, ElLoading } from 'element-plus';
 import { Loading } from '@element-plus/icons-vue';
-import { deleteAirCollection } from '@/api/center';
+import { deleteAirCollection, changeTicket } from '@/api/center'; // 引入 changeTicket
 import {
   getAirDetail,
   getCollection,
@@ -242,6 +218,9 @@ const route = useRoute();
 const router = useRouter();
 const userStore = useUserStore();
 
+// 新增：改签状态
+const changeOrderId = ref(sessionStorage.getItem('changeOrderId'));
+
 const selectSeat = ref([]);
 const collection = ref([]);
 const content = computed(() => {
@@ -253,10 +232,9 @@ const dialogFormVisible = ref(false);
 const positions = ref({});
 const resumeList = ref([]);
 const appliedDatas = ref([]);
-const paymentChoiceVisible = ref(false); // 控制选择支付方式弹窗的显示
-const payType = ref('balance'); // 默认选择余额支付 'balance' 或 'alipay'
-const createdOrderId = ref(null); // 存储当前创建的订单ID
-// 支付相关状态
+const paymentChoiceVisible = ref(false);
+const payType = ref('balance');
+const createdOrderId = ref(null);
 const payDialogVisible = ref(false);
 const payContent = ref('');
 const currentOrderId = ref(null);
@@ -268,7 +246,6 @@ const form = reactive({
 
 async function initData() {
   const { data } = await getAirDetail(route.query.id);
-  console.log(data, 5555555);
   positions.value = data;
   initGetCollection();
 }
@@ -282,6 +259,13 @@ async function initGetCollection() {
     t: new Date().getTime(),
   });
   collection.value = data.list;
+}
+
+// 新增：取消改签模式
+function cancelChangeMode() {
+  sessionStorage.removeItem('changeOrderId');
+  changeOrderId.value = null;
+  ElMessage.info('已退出改签模式');
 }
 
 function onselect(id) {
@@ -322,35 +306,27 @@ async function onCollection() {
     });
   }
 }
-// 4. 新增：确认支付方式并执行支付
-async function confirmPayment() {
-  // 关闭选择弹窗
-  paymentChoiceVisible.value = false;
 
+async function confirmPayment() {
+  paymentChoiceVisible.value = false;
   if (!createdOrderId.value) return;
 
   if (payType.value === 'balance') {
-    // --- 分支 A：余额支付 ---
     try {
       await simulatePayOrder(createdOrderId.value);
       ElMessage.success('余额支付成功！');
-      // 支付成功后跳转回首页
       setTimeout(() => {
         router.replace({ path: '/' });
       }, 1500);
     } catch (error) {
-      // 如果余额不足或失败
       ElMessage.error(error.msg || '余额支付失败，请尝试其他方式');
-      // 失败后可以重新打开选择框，或者让用户去订单中心支付
     }
 
   } else if (payType.value === 'alipay') {
-    // --- 分支 B：支付宝支付 ---
-    // 调用原有的 startAlipay 逻辑
     startAlipay(createdOrderId.value);
   }
 }
-// 关闭支付弹窗
+
 function closePayDialog() {
   payDialogVisible.value = false;
   payContent.value = '';
@@ -360,23 +336,18 @@ function closePayDialog() {
   }
 }
 
-// 检查支付状态
 async function checkPayStatus() {
   if (!currentOrderId.value) return;
-
   try {
     const { data } = await getOrderPayStatus(currentOrderId.value);
     if (data && data.isPay === '已支付') {
-      // 支付成功，清除定时器并关闭支付弹窗
       if (payStatusTimer.value) {
         clearInterval(payStatusTimer.value);
         payStatusTimer.value = null;
       }
       payDialogVisible.value = false;
       ElMessage.success('支付成功，订单已完成');
-      router.replace({
-        path: '/',
-      });
+      router.replace({ path: '/' });
     }
   } catch (error) {
     console.error('检查支付状态出错:', error);
@@ -392,24 +363,15 @@ async function startAlipay(orderId) {
     const { data } = await alipayOrder(orderId);
     if (data) {
       payContent.value = data;
-
-      // 等待 DOM 更新（也就是等待 v-html 把表单渲染出来）
       await nextTick();
-
-      // 找到支付宝返回的表单（支付宝默认表单 name 为 alipaysubmit）
       const alipayForm = document.forms['alipaysubmit'];
       if (alipayForm) {
-        // 手动提交表单，这会让浏览器跳转到支付宝页面
         alipayForm.submit();
       } else {
-        // 如果找不到 name，尝试在容器里找第一个 form
         const container = document.querySelector('.pay-iframe-container');
         const fallbackForm = container?.querySelector('form');
         if (fallbackForm) fallbackForm.submit();
       }
-      // ------------------ 修改结束 ------------------
-
-      // 启动定时器每5秒检查一次支付状态
       payStatusTimer.value = setInterval(checkPayStatus, 5000);
     } else {
       ElMessage.error('获取支付信息失败');
@@ -422,11 +384,9 @@ async function startAlipay(orderId) {
   }
 }
 
-// 新增函数：计算选中座位的总价
 const calculateTotalPrice = () => {
   let total = 0;
   const firstNum = positions.value.jipiaoFirstNum || 0;
-  // 如果没有设置头等舱价格，则默认使用经济舱价格
   const firstPrice = positions.value.jipiaoFirstMoney || positions.value.jipiaoNewMoney;
   const ecoPrice = positions.value.jipiaoNewMoney;
 
@@ -434,13 +394,11 @@ const calculateTotalPrice = () => {
     if(seat <= firstNum) total += firstPrice;
     else total += ecoPrice;
   });
-  return total.toFixed(2); // 保留两位小数
+  return total.toFixed(2);
 }
 
+// 修改：预订/改签逻辑
 function onAddOrder() {
-  if (selectSeat.value.includes(undefined)) {
-    // 简单的防错检查
-  }
   if (selectSeat.value.length === 0) {
     ElMessage.error('请选择座位');
     return;
@@ -448,6 +406,42 @@ function onAddOrder() {
 
   const totalMoney = calculateTotalPrice();
 
+  // 1. 改签逻辑分支
+  if (changeOrderId.value) {
+    ElMessageBox.confirm(
+        `您当前正在改签，选择了 ${selectSeat.value.length} 个座位，新航班票价总计 ${totalMoney} 元。\n系统将自动计算与原订单的差价并进行多退少补（直接操作余额），是否确认？`,
+        '改签确认',
+        {
+          confirmButtonText: '确认改签',
+          cancelButtonText: '取消',
+          type: 'warning',
+        }
+    ).then(async () => {
+      try {
+        const res = await changeTicket({
+          id: changeOrderId.value, // 原订单ID
+          newJipiaoId: positions.value.id, // 新航班ID
+          newBuyZuoweiNumber: selectSeat.value.join(','), // 新座位
+          newBuyZuoweiTime: dayjs().format('YYYY-MM-DD') // 预订日期
+        });
+
+        // 成功处理
+        ElMessage.success('改签成功！');
+        sessionStorage.removeItem('changeOrderId'); // 清除改签状态
+        router.push('/center'); // 返回个人中心
+
+      } catch (error) {
+        console.error('改签失败:', error);
+        // 错误提示由 request拦截器 或 catch 块处理
+        // ElMessage.error(error.msg || '改签失败');
+      }
+    }).catch(() => {
+      // 取消操作
+    });
+    return; // 结束函数，不执行后续的普通购票逻辑
+  }
+
+  // 2. 原有的普通购票逻辑
   ElMessageBox.confirm(
       `您选择了 ${selectSeat.value.length} 个座位，总价为 ${totalMoney} 元，是否确定订购该航班吗？`,
       '订票确认',
@@ -458,7 +452,6 @@ function onAddOrder() {
       }
   ).then(async () => {
     try {
-      // 1. 请求后端创建订单
       const res = await postAirOrder({
         jipiaoPhoto: '',
         jipiaoOrderUuidNumber: new Date().getTime(),
@@ -470,12 +463,9 @@ function onAddOrder() {
         t: new Date().getTime(),
       });
 
-      // 2. 订单创建成功，保存订单ID
       if (res && res.id) {
         createdOrderId.value = res.id;
         ElMessage.success('订单创建成功，请选择支付方式');
-
-        // 3. 打开支付方式选择弹窗
         paymentChoiceVisible.value = true;
       }
     } catch (error) {
@@ -607,7 +597,6 @@ initData();
     font-weight: 600;
   }
 
-  // 新增样式：头等舱文字高亮
   .is-first-class {
     color: #e6a23c;
     font-weight: 600;

@@ -49,7 +49,14 @@ export function getAirOrderRefund(params) {
     params,
   });
 }
-
+// 增加改签接口
+export function changeTicket(data) {
+  return request({
+    url: '/jipiaoOrder/changeTicket',
+    method: 'post',
+    data: data
+  })
+}
 // 更新用户信息
 export function updateUser(data) {
   return request({  
