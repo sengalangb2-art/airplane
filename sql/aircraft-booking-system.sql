@@ -11,12 +11,16 @@
  Target Server Version : 80041 (8.0.41)
  File Encoding         : 65001
 
- Date: 13/01/2026 14:34:07
+ Date: 23/01/2026 12:35:30
 */
+CREATE DATABASE IF NOT EXISTS `aircraft-booking-system` 
+DEFAULT CHARACTER SET utf8mb3 
+COLLATE utf8mb3_general_ci;
+
+USE `aircraft-booking-system`;
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-
 -- ----------------------------
 -- Table structure for dictionary
 -- ----------------------------
@@ -203,7 +207,7 @@ INSERT INTO `jipiao_order` VALUES (21, '1767941580492', 14, 3, 300.00, 101, '55'
 INSERT INTO `jipiao_order` VALUES (22, '1767941588534', 14, 3, 300.00, 101, '53', '2026-01-09', '2026-01-09 14:53:09', '2026-01-09 14:53:09', '待支付', 'JIPIAO_22_1767941595515', NULL);
 INSERT INTO `jipiao_order` VALUES (23, '1767941607982', 14, 3, 300.00, 101, '51', '2026-01-09', '2026-01-09 14:53:28', '2026-01-09 14:53:28', '已支付', NULL, '2026-01-09 14:53:30.172000');
 INSERT INTO `jipiao_order` VALUES (24, '1767941621325', 12, 3, 382.31, 101, '13', '2026-01-09', '2026-01-09 14:53:41', '2026-01-09 14:53:41', '已支付', NULL, '2026-01-09 14:53:42.757000');
-INSERT INTO `jipiao_order` VALUES (25, '1767961036614', 39, 10, 9277.00, 101, '1', '2026-01-09', '2026-01-09 20:17:17', '2026-01-09 20:17:17', '已支付', NULL, '2026-01-09 20:17:20.323000');
+INSERT INTO `jipiao_order` VALUES (25, '1767961036614', 39, 10, 5271.00, 101, '34', '2026-01-17', '2026-01-09 20:17:17', '2026-01-09 20:17:17', '已支付', NULL, '2026-01-09 20:17:20.323000');
 
 -- ----------------------------
 -- Table structure for news
@@ -252,16 +256,17 @@ CREATE TABLE `token`  (
   `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '新增时间',
   `expiratedtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '过期时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = 'token表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = 'token表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of token
 -- ----------------------------
 INSERT INTO `token` VALUES (1, 1, 'cyan', 'yonghu', '用户', 'lrcph0junfk90hepnmzegopq31ocy7cj', '2025-02-06 14:42:29', '2025-02-16 23:01:27');
-INSERT INTO `token` VALUES (2, 1, 'admin', 'users', '管理员', 'xwxci2913cinrqaw2h6cxpxigma2pkqj', '2025-02-06 15:12:06', '2026-01-09 20:50:49');
+INSERT INTO `token` VALUES (2, 1, 'admin', 'users', '管理员', 'm3dalyzdbe0o4e6x05di3xwubrpl1bpp', '2025-02-06 15:12:06', '2026-01-21 12:13:48');
 INSERT INTO `token` VALUES (3, 3, 'cyang', 'yonghu', '用户', 'vc8nfs37cze4ssjrs9do03374v8nut8v', '2025-02-06 23:26:30', '2026-01-09 18:26:46');
 INSERT INTO `token` VALUES (4, 9, '20250303', 'yonghu', '用户', 'quhmzbxmu9k2g6ue5zr7j95ob2ekgzti', '2025-03-20 14:41:27', '2025-03-20 15:41:27');
-INSERT INTO `token` VALUES (5, 10, '18407590373', 'yonghu', '用户', '6oa1my2i3dy3uyxkwznqsi6o1f624r6c', '2026-01-08 21:11:53', '2026-01-09 21:16:09');
+INSERT INTO `token` VALUES (5, 10, '18407590373', 'yonghu', '用户', 'otl9yp1lely6hgpltnhlecayxdwlyp4b', '2026-01-08 21:11:53', '2026-01-17 11:26:34');
+INSERT INTO `token` VALUES (6, 11, 'GEM', 'yonghu', '用户', 'c0lcsud4qrchsgm9trfb3br5xi64korm', '2026-01-13 15:38:21', '2026-01-13 16:38:22');
 
 -- ----------------------------
 -- Table structure for users
@@ -298,7 +303,7 @@ CREATE TABLE `yonghu`  (
   `yonghu_delete` int NULL DEFAULT 1 COMMENT '假删',
   `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '用户' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '用户' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of yonghu
@@ -307,6 +312,7 @@ INSERT INTO `yonghu` VALUES (1, 'cindy', '123456', 'cindy', 'upload/174059277494
 INSERT INTO `yonghu` VALUES (2, '13500505050', '123456', '小黄', 'upload/1740592763987.jpg', '13500505050', '410224199010102002', 1, 962.45, 2, '2025-01-02 14:38:39');
 INSERT INTO `yonghu` VALUES (3, 'cyang', '123456', '小杨', 'upload/1742477385307.jpg', '13200202020', '410224199010102003', 2, 90680.00, 2, '2025-01-04 14:38:39');
 INSERT INTO `yonghu` VALUES (9, '20250303', '123456', '小花', NULL, '13500525656', '350325200304051265', 1, 90000.00, 2, '2025-03-20 14:41:20');
-INSERT INTO `yonghu` VALUES (10, '18407590373', 'qwe123456', '姚钟华', NULL, '18407590373', '111111111111110025', 1, 723.00, 1, '2026-01-08 21:11:41');
+INSERT INTO `yonghu` VALUES (10, '18407590373', 'qwe123456', '姚钟华', NULL, '18407590373', '111111111111110025', 1, 4729.00, 1, '2026-01-08 21:11:41');
+INSERT INTO `yonghu` VALUES (11, 'GEM', 'qwe123456', '姚钟华', NULL, '18407590372', '440883200004280015', 1, 0.00, 1, '2026-01-13 15:38:13');
 
 SET FOREIGN_KEY_CHECKS = 1;
